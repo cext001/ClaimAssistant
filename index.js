@@ -13,7 +13,7 @@ app.get('/',(req,res)=>{
     res.send('App running');
 });
 
-app.post('/buddy',(req,res)=>{
+app.post('/claim',(req,res)=>{
     console.log('Req:',req.body.request.intent);
     //let intent = require('./'+req.body.request.intent.name);
     //intent.requestHandler(req,res);
