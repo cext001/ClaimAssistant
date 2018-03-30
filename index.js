@@ -2,7 +2,7 @@ const express = require('express'),
 Alexa = require('alexa-app'),
 bodyParser = require('body-parser'),
 request = require('request'),
-config = require('./config')
+//config = require('./config')
 
 const app = express();
 app.use(bodyParser.json());
