@@ -15,8 +15,8 @@ app.get('/',(req,res)=>{
 
 app.post('/claim',(req,res)=>{
     console.log('Req:',req.body.request.intent);
-    //let intent = require('./'+req.body.request.intent.name);
-    //intent.requestHandler(req,res);
+    let intent = require('./'+req.body.request.intent.name);
+    intent.requestHandler(req,res);
 })
 const server = app.listen(process.env.PORT || 443, () => {
     console.log('Express server listening on port %d', server.address().port);
