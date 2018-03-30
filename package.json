@@ -1,7 +1,7 @@
 {
-  "name": "ChennaiBuddy",
+  "name": "ClaimAssistant",
   "version": "1.0.0",
-  "description": "An Alexa POC to get info about Chennai",
+  "description": "An Alexa POC for Insurance Claim",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
