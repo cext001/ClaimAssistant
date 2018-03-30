@@ -19,7 +19,7 @@ app.get('/',(req,res)=>{
 });
 
 app.post('/claim',(req,res)=>{
-    console.log('Req:',req.body.request.intent);
+    console.log('Req:',req.body.request);
     switch (event.request.type) {
         
               case "LaunchRequest":
