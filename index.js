@@ -1,7 +1,7 @@
 const express = require('express'),
 Alexa = require('alexa-app'),
 bodyParser = require('body-parser'),
-request = require('request'),
+request = require('request');
 //config = require('./config')
 
 const app = express();
