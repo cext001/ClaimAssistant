@@ -188,7 +188,7 @@ app.post('/claim',(req,res)=>{
                                 "outputSpeech": {
                                   "type": "SSML",
                                   //"text": responseText,
-                                  "ssml": "<speak>The claim status of the claim Id,<say-as interpret-as='digits'>"+claimId+"</say-as>,, is active</speak>"
+                                  "ssml": "<speak>The claim status of the claim i d,<say-as interpret-as='digits'>"+claimId+"</say-as>,, is active</speak>"
                                 }
                             }
                         }
