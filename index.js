@@ -82,7 +82,7 @@ app.post('/claim',(req,res)=>{
                                   }
                           }
                       }
-                      res.json(responseJson).end();
+                      res.json(responseJson);
                         break;
                       }
         
