@@ -69,11 +69,11 @@ app.post('/claim',(req,res)=>{
                         var responseJson = {                          
                           "shouldEndSession": false,
                           "response": {
-                              // "outputSpeech": {
-                              //   "type": "PlainText",
-                              //   "text": text,
-                              //   "ssml": "<speak>"+text+"</speak>"
-                              // },
+                              "outputSpeech": {
+                                "type": "PlainText",
+                                "text": text,
+                                "ssml": "<speak>"+text+"</speak>"
+                              },
                               "reprompt": {
                                 "outputSpeech": {
                                   "type": 'PlainText',
