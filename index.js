@@ -20,24 +20,34 @@ app.get('/',(req,res)=>{
 
 app.post('/claim',(req,res)=>{
     console.log('Req:',req.body.request);
-    switch (event.request.type) {
+    switch (req.body.request.type) {
         
               case "LaunchRequest":
                 // Launch Request
                 console.log(`LAUNCH REQUEST`)
-                context.succeed(
+                /*context.succeed(
                   generateResponse(
                     buildSpeechletResponse("Greeting from your Insurance Manager", false),
                     {}
                   )
-                )
+                )*/
+                var responseJson = {
+                  "response": {
+                      "outputSpeech": {
+                        "type": "PlainText",
+                        "text": responseText,
+                        "ssml": "<speak>"+responseText+"</speak>"
+                      }
+                    }
+                  };
+                res.json(responseJson).end(); 
                 break;
         
               case "IntentRequest":
                 // Intent Request
                 console.log(`NEW INTENT REQUEST`)
         
-                switch(event.request.intent.name) {
+                switch(req.body.request.intent.name) {
         
                     case "claimStatusIntent":
                       console.log("claimStatusIntent  called");
@@ -45,16 +55,26 @@ app.post('/claim',(req,res)=>{
                       claimId = "";
                       resp_msg = "";
         
-                      if(event.request.intent.slots.claimId.value){
+                      if(req.body.request.intent.slots.claimId.value){
                         ClaimNumberPresent = true;
-                        console.log("Claim number in Insurance status : " + event.request.intent.slots.claimId.value);
-                        claimId = event.request.intent.slots.claimId.value;
+                        console.log("Claim number in Insurance status : " + req.body.request.intent.slots.claimId.value);
+                        claimId = req.body.request.intent.slots.claimId.value;
                       }
         
                       if(ClaimNumberPresent == false){
                         voice = "Please provide the claim number";
                         text = "Please provide the claim number";
-                        output(voice, text, false, context);
+                        //output(voice, text, false, context);
+                        var responseJson = {
+                          "response": {
+                              "outputSpeech": {
+                                "type": "PlainText",
+                                "text": text,
+                                "ssml": "<speak>"+text+"</speak>"
+                              }
+                          }
+                      }
+                      res.json(responseJson).end();
                         break;
                       }
         
@@ -89,15 +109,36 @@ app.post('/claim',(req,res)=>{
                       if(ClaimNumberPresent == false){
                         voice = "Please provide the claim number";
                         text = "Please provide the claim number";
-                        output(voice, text, false, context);
+                        //output(voice, text, false, context);
+                        var responseJson = {
+                          "response": {
+                              "outputSpeech": {
+                                "type": "PlainText",
+                                "text": text,
+                                "ssml": "<speak>"+text+"</speak>"
+                              }
+                          }
+                      }
+                      res.json(responseJson).end();
                         break;
                       }
         
                       if(InsuranceDetailsIntentCalled && ClaimNumberPresent){
-                        getRequest(function(message){
+                        /*getRequest(function(message){
                           console.log("InsuranceDetailsIntent Response : " + message);
                           output(message, message, true, context);
-                        });
+                        });*/
+
+                        var responseJson = {
+                          "response": {
+                              "outputSpeech": {
+                                "type": "PlainText",
+                                "text": text,
+                                "ssml": "<speak>"+text+"</speak>"
+                              }
+                          }
+                      }
+                      res.json(responseJson).end();
                       }
         
                       break;
@@ -105,24 +146,45 @@ app.post('/claim',(req,res)=>{
                     case "claimIdIntent":
                       claimId = "";
                       resp_msg = "";
-                      if(event.request.intent.slots.claimId.value){
+                      if(req.body.request.intent.slots.claimId.value){
                         ClaimNumberPresent = true;
-                        console.log("Claim number in Insurance details : " + event.request.intent.slots.claimId.value);
-                        claimId = event.request.intent.slots.claimId.value;
+                        console.log("Claim number in Insurance details : " + req.body.request.intent.slots.claimId.value);
+                        claimId = req.body.request.intent.slots.claimId.value;
                       }
         
                       if(ClaimNumberPresent == false){
                         voice = "Please provide the valid claim number";
                         text = "Please provide the valid claim number";
-                        output(voice, text, false, context);
+                        //output(voice, text, false, context);
+                        var responseJson = {
+                          "response": {
+                              "outputSpeech": {
+                                "type": "PlainText",
+                                "text": text,
+                                "ssml": "<speak>"+text+"</speak>"
+                              }
+                          }
+                      }
+                      res.json(responseJson).end();
                         break;
                       }
         
                       if(claimStatusIntentCalled == true || InsuranceDetailsIntentCalled == true ){
-                        getRequest(function(message){
+                        /*getRequest(function(message){
                           console.log("Response : " + message);
                           output(message, message, true, context);
-                        });
+                        });*/
+                        var responseText = "The claim status of the claim Id,,"+claimId +",, is active";
+                        var responseJson = {
+                            "response": {
+                                "outputSpeech": {
+                                  "type": "PlainText",
+                                  "text": responseText,
+                                  "ssml": "<speak>"+responseText+"</speak>"
+                                }
+                            }
+                        }
+                        res.json(responseJson).end();
                       }
                       else{
                         context.succeed(
