@@ -31,6 +31,7 @@ app.post('/claim',(req,res)=>{
                     {}
                   )
                 )*/
+                var responseText = 'Hi..welcome to claim assistant';
                 var responseJson = {
                   "response": {
                       "outputSpeech": {
