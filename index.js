@@ -68,12 +68,12 @@ app.post('/claim',(req,res)=>{
                         //output(voice, text, false, context);
                         var responseJson = {                          
                           "shouldEndSession": false,
-                          // "response": {
-                          //     "outputSpeech": {
-                          //       "type": "PlainText",
-                          //       "text": text,
-                          //       "ssml": "<speak>"+text+"</speak>"
-                          //     },
+                          "response": {
+                              // "outputSpeech": {
+                              //   "type": "PlainText",
+                              //   "text": text,
+                              //   "ssml": "<speak>"+text+"</speak>"
+                              // },
                               "reprompt": {
                                 "outputSpeech": {
                                   "type": 'PlainText',
@@ -93,7 +93,7 @@ app.post('/claim',(req,res)=>{
                                 "outputSpeech": {
                                   "type": "PlainText",
                                   "text": responseText,
-                                  "ssml": "<speak>The claim status of the claim Id,<say-as interpret-as='cardinal'>"+claimId+"</say-as>,, is active</speak>"
+                                  "ssml": "<speak>"+responseText+"</speak>"
                                 }
                             }
                         }
@@ -187,8 +187,8 @@ app.post('/claim',(req,res)=>{
                             "response": {
                                 "outputSpeech": {
                                   "type": "PlainText",
-                                  "text": responseText,
-                                  "ssml": "<speak>"+responseText+"</speak>"
+                                  //"text": responseText,
+                                  "ssml": "<speak>The claim status of the claim Id,<say-as interpret-as='cardinal'>"+claimId+"</say-as>,, is active</speak>"
                                 }
                             }
                         }
