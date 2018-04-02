@@ -56,11 +56,11 @@ app.post('/claim',(req,res)=>{
                       claimId = "";
                       resp_msg = "";
         
-                      /*if(req.body.request.intent.slots.claimId.value){
+                      if(req.body.request.intent.slots.claimId.value){
                         ClaimNumberPresent = true;
                         console.log("Claim number in Insurance status : " + req.body.request.intent.slots.claimId.value);
                         claimId = req.body.request.intent.slots.claimId.value;
-                      }*/
+                      }
         
                       if(ClaimNumberPresent == false){
                         voice = "Please provide the claim number";
