@@ -66,13 +66,20 @@ app.post('/claim',(req,res)=>{
                         voice = "Please provide the claim number";
                         text = "Please provide the claim number";
                         //output(voice, text, false, context);
-                        var responseJson = {
+                        var responseJson = {                          
+                          "shouldEndSession": false,
                           "response": {
                               "outputSpeech": {
                                 "type": "PlainText",
                                 "text": text,
                                 "ssml": "<speak>"+text+"</speak>"
-                              }
+                              },
+                              "reprompt": {
+                                "outputSpeech": {
+                                  "type": 'PlainText',
+                                  "text": text
+                                }
+                                  }
                           }
                       }
                       res.json(responseJson).end();
