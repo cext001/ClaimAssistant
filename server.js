@@ -77,8 +77,9 @@ alexaApp.launch(function (request, response) {
     var say = [];
     if (request.getSession().isNew()) {
                     say.push('<s>Hi </s>');
-                    say.push('<s>Welcome to Claim Assistane. <break strength="medium" /></s>');   
-                    say.push('<s>What i can do for you <break strength="medium" /></s>');                  
+                    say.push('<s>Welcome to Claim Assistant. <break strength="medium" /></s>');   
+                    say.push('<s>What i can do for you <break strength="medium" /></s>');  
+                    response.shouldEndSession(false);
                     response.say(say.join('\n'));
                     response.send();
                 
