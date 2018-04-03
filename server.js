@@ -217,6 +217,7 @@ alexaApp.intent('rentDetailsIntent', function (request, response) {
     console.log(request.data.request.intent.slots);
     if (request.data.request.intent.slots.startDate.value && rentalStartDate =='' ){
         rentalStartDate = request.data.request.intent.slots.startDate.value;
+        console.log(rentalStartDate);
         say =["<s> Can you tell me for how many days you would require the rental car service?</s>"];
     }
     if(rentalStartDate==''){
@@ -226,6 +227,7 @@ alexaApp.intent('rentDetailsIntent', function (request, response) {
         rentalDays = request.data.request.intent.slots.days.value;
         getRentalConfirmation(rentalStartDate,function(responseText){
             say = responseText;
+            console.log(say);
         });
     }
     if(rentalDays==''){
