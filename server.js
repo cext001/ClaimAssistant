@@ -97,16 +97,6 @@ alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
     alexaApp.stopOrCancel(request, response);
 });
 
-alexaApp.intent('CardIntent', function (request, response) {
-    response.card(alexaApp.card(JSON.parse(request.session('current') || '{}')));
-    response.say('Your results have been sent to the Alexa app.');
-});
-
-alexaApp.intent('RepeatIntent', function (request, response) {
-    var q = quiz.getQuestion(request.session('q'));
-    response.shouldEndSession(false, 'What do you think? Is it ' + q.choices() + '?');
-    response.say(q.questionAndAnswers());
-});
 
 alexaApp.intent('claimStatusIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
@@ -115,10 +105,10 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
     response.say(say.join('\n'));
 });
 
-alexaApp.intent('AnotherIntent', function (request, response) {
+alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
-    var say = ["<s>Ok. Let's start another quiz. <break strength=\"medium\" /></s>"];
-    say = say.concat(alexaApp.startQuiz(response, Object.keys(all)));
+    console.log(request)
+    var say = ["<s> Status is active <break strength=\"medium\" /></s>"];
     response.say(say.join('\n'));
 });
 
