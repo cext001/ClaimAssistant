@@ -138,6 +138,14 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     response.say(say.join('\n'));
 });
 
+alexaApp.intent('thankIntent', function (request, response) {
+    var all = JSON.parse(request.session('all') || '{}');
+    var say =["<s> Happy to help you!</s>"];;
+    response.shouldEndSession(true);
+    response.say(say.join('\n'));
+});
+
+
 if (process.argv.length > 2) {
     var arg = process.argv[2];
     if (arg === '-s' || arg === '--schema') {
