@@ -84,7 +84,6 @@ alexaApp.launch(function (request, response) {
                 
     } else {
         console.log('----Access Token not available----');
-        response.card(alexaApp.accountLinkingCard());
         response.say('<s>Node Saga requires you to link your google account.</s>');
     }
 });
