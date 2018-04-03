@@ -193,8 +193,8 @@ function getClaimStatus(claimId,callback){
 }
 
 function getRepairPaymentStatus(claimId,callback){
-    var say = ["<s> This claim is ,, “Paid in Full”.</s>"];
-    say.push('<s> The amount of $150.55 is credited to your bank account number <break strength=\"medium\" /> <say-as interpret-as="spell-out">ABC121212 </say-as> </s>');
+    var say = ["<s> This claim is ,<break strength=\"medium\" /> “Paid in Full”.</s>"];
+    say.push('<s> The amount of $150.55 is credited to your bank account number <break strength=\"medium\" /> <say-as interpret-as="spell-out">ABC121212</say-as> </s>');
     say.push('<s> on 1st April 2018 at 3:00 PM GMT.</s>');
     callback (say);
 }
