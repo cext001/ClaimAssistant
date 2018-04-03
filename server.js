@@ -57,7 +57,7 @@ alexaApp.claimStatusIntent = function (request, response) {
     var say = [];
     // set current list of questions to empty
     response.session('current', '{}');
-        say.push('<s>Welcome to Claim Assistant. <break strength="medium" /></s>');           
+        say.push('<s>Please provide the claim number <break strength="medium" /></s>');           
     console.log(say);
     response.shouldEndSession(false); 
     response.say(say.join('\n'));
