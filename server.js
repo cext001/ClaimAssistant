@@ -224,7 +224,7 @@ alexaApp.intent('rentDetailsIntent', function (request, response) {
     }
     if(request.data.request.intent.slots.days.value && rentalDays ==''){
         rentalDays = request.data.request.intent.slots.days.value;
-        getRentalConfirmation(function(responseText){
+        getRentalConfirmation(function(rentalStartDate,responseText){
             say = responseText;
         });
     }
@@ -272,6 +272,13 @@ function getRepairPaymentStatus(claimId,callback){
 function getRentalCarStatus(claimId,callback){
     var say = ["<s> The Rental car has not been booked yet as the option was not selected when the claim was created.</s>"];
     say.push('<s> <break strength=\"medium\" /> Do you want to book one? </s>');
+    callback (say);
+}
+
+function getRentalCarStatus(startDate,callback){
+    var say = ["<s> The car has been booked with the Rental agency <break strength=\"medium\" /> “Enterprise” and the reservation number is <say-as interpret-as=\"spell-out\">AB0963829</say-as>. </s>"];
+    say.push('<s> The car will be delivered on<break strength=\"medium\" />');
+    say.push(+startDate+', 9AM.</s>');    
     callback (say);
 }
 
