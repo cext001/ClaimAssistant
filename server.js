@@ -107,7 +107,7 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
 
 alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
-    console.log(request.data.request.slot)
+    console.log(request.data.request)
     var say = ["<s> Status is active <break strength=\"medium\" /></s>"];
     response.say(say.join('\n'));
 });
