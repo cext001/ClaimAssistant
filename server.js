@@ -107,8 +107,9 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
 
 alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
-    console.log(request.data.request.intent.slots)
-    var say = ["<s> Status is active <break strength=\"medium\" /></s>"];
+    console.log(request.data.request.intent.slots.claimId.value)
+    claimId=request.data.request.intent.slots.claimId.value;
+    var say = ["<s> According to our records, the current status of claim with ID <break strength=\"medium\"> "+ claimId +" </break> is “ON HOLD”.  The reason for the same is <break strength=\"medium\"> “Invoice Not Submitted”. </break> Once the invoice is submitted, it will take 5 working days for settlement.</s>"];
     response.say(say.join('\n'));
 });
 
