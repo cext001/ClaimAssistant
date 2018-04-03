@@ -127,6 +127,7 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
 alexaApp.intent('repairPaymentIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     repairPaymentIntentCalled = true;
+    console.log('inside repairPaymentIntent');
     console.log(request.data.request.intent.slots)
     var say=[];
     
