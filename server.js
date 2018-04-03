@@ -138,6 +138,7 @@ alexaApp.intent('repairPaymentIntent', function (request, response) {
         getRepairPaymentStatus(claimId,function(responseText){
             say = responseText;
         });
+        console.log(say);
     }
     else{
      say = ["<s>Please provide the claim number. <break strength=\"medium\" /></s>"];
