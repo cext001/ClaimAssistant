@@ -18,6 +18,10 @@ alexaApp.error = function (e, req, res) {
     console.log(req);
     throw e;
 };
+var claimStatusIntentCalled = false;
+var rentalCarIntentCalled = false;
+var claimPaymentIntentCalled = false;
+var claimId = '';
 
 //Simple card
 alexaApp.card = function (current) {
@@ -56,7 +60,7 @@ alexaApp.accountLinkingCard = function () {
 
 alexaApp.launch(function (request, response) {
     console.log('launch ' + JSON.stringify(request));
-    console.log('Session Obj ' + JSON.stringify(request.getSession().details.accessToken));
+    console.log('Session Obj ' + JSON.stringify(request.getSession()));
     console.log('Session Obj is new ' + request.getSession().isNew());
     var say = [];
     if (request.getSession().isNew()) {
@@ -100,6 +104,7 @@ alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
 
 alexaApp.intent('claimStatusIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
+    claimStatusIntentCalled = true;
     console.log(request.data.request.intent.slots)
     var say = ["<s>Please provide the claim number. <break strength=\"medium\" /></s>"];
     response.shouldEndSession(false);
@@ -109,7 +114,7 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
 alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     console.log(request.data.request.intent.slots.claimId.value)
-    var claimId=request.data.request.intent.slots.claimId.value;
+    claimId=request.data.request.intent.slots.claimId.value;
     var say = ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> "+ claimId +" </say-as>, is ,, “ON HOLD”.</s>"];
     say.push('<s> The reason for the same is <break strength=\"medium\" /> “Invoice Not Submitted”.</s>');
     say.push('<s> Once the invoice is submitted, it will take 5 working days for settlement.</s>');
