@@ -2,9 +2,9 @@
   "name": "ClaimAssistant",
   "version": "1.0.0",
   "description": "An Alexa POC for Insurance Claim",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "author": "Hari Krishnan V",
   "license": "ISC",
