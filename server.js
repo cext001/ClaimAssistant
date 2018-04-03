@@ -107,17 +107,18 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     claimStatusIntentCalled = true;
     console.log(request.data.request.intent.slots)
+    var say=[];
     
     if (request.data.request.intent.slots.claimId.value){
         claimId=request.data.request.intent.slots.claimId.value;
         console.log('claimId:'+claimId);
         claimIdPresent = true;
         getClaimStatus(claimId,function(responseText){
-            var say = responseText;
+            say = responseText;
         });
     }
     else{
-    var say = ["<s>Please provide the claim number. <break strength=\"medium\" /></s>"];
+     say = ["<s>Please provide the claim number. <break strength=\"medium\" /></s>"];
     }
     response.shouldEndSession(false);
     response.say(say.join('\n'));
@@ -125,11 +126,12 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
 
 alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
+    var say =[];
     console.log(request.data.request.intent.slots.claimId.value)
     claimId=request.data.request.intent.slots.claimId.value;
     if(claimStatusIntentCalled){
         getClaimStatus(claimId,function(responseText){
-            var say = responseText;
+            say = responseText;
         });
     }
     response.shouldEndSession(false);
