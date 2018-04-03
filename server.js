@@ -228,7 +228,7 @@ alexaApp.intent('rentDetailsIntent', function (request, response) {
             say = responseText;
         });
     }
-    if(rentalStartDate==''){
+    if(rentalDays==''){
         say =["<s> Can you tell me for how many days you would require the rental car service?</s>"];
     }
    // var say =["<s> Happy to help you!</s>"];
