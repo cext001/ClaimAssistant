@@ -277,7 +277,7 @@ function getRentalCarStatus(claimId,callback){
 
 function getRentalConfirmation(startDate,callback){
     var say = ["<s> The car has been booked with the Rental agency <break strength=\"medium\" /> “Enterprise” and the reservation number is <say-as interpret-as=\"spell-out\">AB0963829</say-as>. </s>"];
-    say.push('<s> The car will be delivered on<break strength=\"medium\" /><say-as interpret-as=\"date\">');
+    say.push('<s> The car will be delivered on<break strength=\"medium\" /><say-as interpret-as="date" format="mdy">');
     say.push(+startDate+',</say-as>, 9AM.</s>');    
     callback (say);
 }
