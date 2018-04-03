@@ -31,7 +31,7 @@ alexaApp.card = function (current) {
     console.log('createCard: current=', current);
     var card = {
         type: 'Simple',
-        title: 'Quiz results'
+        title: 'Card'
     };
     
     card.content = content;
@@ -42,7 +42,7 @@ alexaApp.card = function (current) {
 alexaApp.standardCard = function () {
     var card = {
         type: 'Standard',
-        title: 'Quiz results',
+        title: 'Card',
         text: 'Sample Text \n Line2',
         image: {
             smallImageUrl: 'https://cdn3.iconfinder.com/data/icons/phones-set-2/512/27-512.png',
@@ -86,31 +86,6 @@ alexaApp.launch(function (request, response) {
        // response.say('<s>Node Saga requires you to link your google account.</s>');
     }
 });
-
-alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
-    response.say('Say repeat <break strength="medium" /> to hear the question again, or stop <break strength="medium" /> to end.');
-    response.shouldEndSession(false);
-});
-
-alexaApp.stopOrCancel = function (request, response) {
-    var current = JSON.parse(request.session('current') || '{}');
-    var score = quiz.getScore(current);
-    var say = ['Thanks for playing Node Saga'];
-    if (Object.keys(current).length) {
-        say.push('<s>You got ' + score + ' questions correct.</s>');
-        response.card(alexaApp.card(current));
-    }
-    response.say(say.join('\n'));
-};
-
-alexaApp.intent('AMAZON.StopIntent', function (request, response) {
-    alexaApp.stopOrCancel(request, response);
-});
-
-alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
-    alexaApp.stopOrCancel(request, response);
-});
-
 
 alexaApp.intent('claimStatusIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
@@ -216,6 +191,7 @@ alexaApp.intent('rentCancelIntent', function (request, response) {
     var say =["<s> Okay,But you can book a rental car later!</s>"];
     response.shouldEndSession(true);
     response.say(say.join('\n'));
+    resetAll();
 });
 
 alexaApp.intent('rentDetailsIntent', function (request, response) {
@@ -251,6 +227,7 @@ alexaApp.intent('thankIntent', function (request, response) {
     var say =["<s> Happy to help you!</s>"];
     response.shouldEndSession(true);
     response.say(say.join('\n'));
+    resetAll();
 });
 
 
@@ -290,6 +267,16 @@ function getRentalConfirmation(startDate,callback){
     say.push('<s> The car will be delivered on<break strength=\"medium\" />');
     say.push('April 5, 9AM.</s>');    
     callback (say);
+}
+
+function resetAll(){
+    claimStatusIntentCalled = false;
+    rentalCarIntentCalled = false;
+    repairPaymentIntentCalled = false;
+    claimIdPresent = false;
+    rentalStartDate = '';
+    rentalDays = '';
+    claimId = '';
 }
 
 const server = app.listen(process.env.PORT || 5000, () => {
