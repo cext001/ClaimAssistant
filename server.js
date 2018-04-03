@@ -100,7 +100,7 @@ alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
 
 alexaApp.intent('claimStatusIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
-    var say = ["<s>Please provide the claim i d. <break strength=\"medium\" /></s>"];
+    var say = ["<s>Please provide the claim number. <break strength=\"medium\" /></s>"];
     response.shouldEndSession(false);
     response.say(say.join('\n'));
 });
