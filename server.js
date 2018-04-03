@@ -100,6 +100,7 @@ alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
 
 alexaApp.intent('claimStatusIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
+    console.log(request.data.request.intent.slots)
     var say = ["<s>Please provide the claim number. <break strength=\"medium\" /></s>"];
     response.shouldEndSession(false);
     response.say(say.join('\n'));
@@ -111,7 +112,8 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     var claimId=request.data.request.intent.slots.claimId.value;
     var say = ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> "+ claimId +" </say-as>, is ,, “ON HOLD”.</s>"];
     say.push('<s> The reason for the same is <break strength=\"medium\" /> “Invoice Not Submitted”.</s>');
-     say.push('<s> Once the invoice is submitted, it will take 5 working days for settlement.</s>');
+    say.push('<s> Once the invoice is submitted, it will take 5 working days for settlement.</s>');
+    response.shouldEndSession(false);
     response.say(say.join('\n'));
 });
 
