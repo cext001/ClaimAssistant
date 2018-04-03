@@ -109,7 +109,9 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     console.log(request.data.request.intent.slots.claimId.value)
     var claimId=request.data.request.intent.slots.claimId.value;
-    var say = ["<s> According to our records, the current status of claim with ID <say-as interpret-as='digits'> "+ claimId +" </say-as>, is “ON HOLD”.  The reason for the same is <break strength=\"medium\" /> “Invoice Not Submitted”. Once the invoice is submitted, it will take 5 working days for settlement.</s>"];
+    var say = ["<s> According to our records, the current status of claim with ID <say-as interpret-as='digits'> "+ claimId +" </say-as>, is “ON HOLD”.</s>"];
+    say.push('<s> The reason for the same is <break strength=\"medium\" /> “Invoice Not Submitted”.</s>');
+     say.push('<s> Once the invoice is submitted, it will take 5 working days for settlement.</s>');
     response.say(say.join('\n'));
 });
 
