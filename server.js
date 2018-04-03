@@ -200,7 +200,7 @@ alexaApp.intent('rentConfirmIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say = ["<s> As per your policy, you are eligible for 30 days rental car service not exceeding $35 a day.</s>"];
     say.push('<s> Can you let me know the start date of the rental car service?</s>');
-    response.shouldEndSession(true);
+    response.shouldEndSession(false);
     response.say(say.join('\n'));
 });
 
