@@ -20,7 +20,7 @@ alexaApp.error = function (e, req, res) {
 };
 var claimStatusIntentCalled = false;
 var rentalCarIntentCalled = false;
-var claimPaymentIntentCalled = false;
+var repairPaymentIntentCalled = false;
 var claimIdPresent = false;
 var claimId = '';
 
@@ -124,6 +124,27 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
     response.say(say.join('\n'));
 });
 
+alexaApp.intent('repairPaymentIntent', function (request, response) {
+    var all = JSON.parse(request.session('all') || '{}');
+    repairPaymentIntentCalled = true;
+    console.log(request.data.request.intent.slots)
+    var say=[];
+    
+    if (request.data.request.intent.slots.claimId.value){
+        claimId=request.data.request.intent.slots.claimId.value;
+        console.log('claimId:'+claimId);
+        claimIdPresent = true;
+        getRepairPaymentStatus(claimId,function(responseText){
+            say = responseText;
+        });
+    }
+    else{
+     say = ["<s>Please provide the claim number. <break strength=\"medium\" /></s>"];
+    }
+    response.shouldEndSession(false);
+    response.say(say.join('\n'));
+});
+
 alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say =[];
@@ -134,9 +155,15 @@ alexaApp.intent('claimIdIntent', function (request, response) {
             say = responseText;
         });
     }
+    if(repairPaymentIntentCalled){
+        getRepairPaymentStatus(claimId,function(responseText){
+            say = responseText;
+        });
+    }
     response.shouldEndSession(false);
     response.say(say.join('\n'));
 });
+
 
 alexaApp.intent('thankIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
@@ -160,6 +187,13 @@ function getClaimStatus(claimId,callback){
     var say = ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> "+ claimId +" </say-as>, is ,, “ON HOLD”.</s>"];
     say.push('<s> The reason for the same is <break strength=\"medium\" /> “Invoice Not Submitted”.</s>');
     say.push('<s> Once the invoice is submitted, it will take 5 working days for settlement.</s>');
+    callback (say);
+}
+
+function getRepairPaymentStatus(claimId,callback){
+    var say = ["<s> This claim is ,, “Paid in Full”.</s>"];
+    say.push('<s> The amount of $150.55 is credited to your bank account # <break strength=\"medium\" /> </s>');
+    say.push('<s> on 1st April 2018 at 3:00 PM GMT.</s>');
     callback (say);
 }
 
