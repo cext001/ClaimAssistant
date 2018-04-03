@@ -67,6 +67,13 @@ alexaApp.launch(function (request, response) {
     console.log('Session Obj is new ' + request.getSession().isNew());
     var say = [];
     if (request.getSession().isNew()) {
+        claimStatusIntentCalled = false;
+        rentalCarIntentCalled = false;
+        repairPaymentIntentCalled = false;
+        claimIdPresent = false;
+        rentalStartDate = '';
+        rentalDays = '';
+        claimId = '';
                     say.push('<s>Hi</s>');
                     say.push('<s>Welcome to Claim Assistant. <break strength="medium" /></s>');   
                     say.push('<s>What can I do for you <break strength="medium" /></s>');  
