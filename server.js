@@ -224,7 +224,7 @@ alexaApp.intent('rentDetailsIntent', function (request, response) {
     }
     if(request.data.request.intent.slots.days.value && rentalDays ==''){
         rentalDays = request.data.request.intent.slots.days.value;
-        getRentalConfirmation(function(rentalStartDate,responseText){
+        getRentalConfirmation(rentalStartDate,function(responseText){
             say = responseText;
         });
     }
