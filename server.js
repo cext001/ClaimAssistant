@@ -75,7 +75,7 @@ alexaApp.launch(function (request, response) {
     console.log('Session Obj ' + JSON.stringify(request.getSession().details.accessToken));
     console.log('Session Obj is new ' + request.getSession().isNew());
     var say = [];
-    if (request.getSession().details.accessToken) {
+    if (request.getSession().isNew()) {
                     say.push('<s>Hi </s>');
                     say.push('<s>Welcome to Claim Assistane. <break strength="medium" /></s>');   
                     say.push('<s>What i can do for you <break strength="medium" /></s>');                  
