@@ -52,22 +52,17 @@ alexaApp.accountLinkingCard = function () {
     return card;
 }
 
-alexaApp.startQuiz = function (response, used) {
-	console.log('Inside Start Quiz');
-    var say = ['<s>First question:</s>'];
+alexaApp.claimStatusIntent = function (request, response) {
+	console.log('Inside claimStatusIntent');
+    var say = [];
     // set current list of questions to empty
     response.session('current', '{}');
-    var q = quiz.getNextQuestion(used);
-	console.log('Q is - '+q);
-    if (q) {
-        say.push(q.questionAndAnswers());
-        response.session('q', q.id);
-        response.shouldEndSession(false, 'What do you think? Is it ' + q.choices() + '?');
-    } else {
-        say.push("That's all the questions I have for now.");
-    }
-	console.log(say);
-    return say;
+        say.push('<s>Welcome to Claim Assistant. <break strength="medium" /></s>');           
+    console.log(say);
+    response.shouldEndSession(false); 
+    response.say(say.join('\n'));
+    response.send();
+    //return say;
 };
 
 alexaApp.launch(function (request, response) {
