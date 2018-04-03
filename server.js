@@ -21,6 +21,7 @@ alexaApp.error = function (e, req, res) {
 var claimStatusIntentCalled = false;
 var rentalCarIntentCalled = false;
 var claimPaymentIntentCalled = false;
+var claimIdPresent = false;
 var claimId = '';
 
 //Simple card
@@ -106,7 +107,18 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     claimStatusIntentCalled = true;
     console.log(request.data.request.intent.slots)
+    
+    if (request.data.request.intent.slots.claimId.value){
+        claimId=request.data.request.intent.slots.claimId.value;
+        console.log('claimId:'+claimId);
+        claimIdPresent = true;
+        getClaimStatus(claimId,function(responseText){
+            var say = responseText;
+        });
+    }
+    else{
     var say = ["<s>Please provide the claim number. <break strength=\"medium\" /></s>"];
+    }
     response.shouldEndSession(false);
     response.say(say.join('\n'));
 });
@@ -115,9 +127,11 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     console.log(request.data.request.intent.slots.claimId.value)
     claimId=request.data.request.intent.slots.claimId.value;
-    var say = ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> "+ claimId +" </say-as>, is ,, “ON HOLD”.</s>"];
-    say.push('<s> The reason for the same is <break strength=\"medium\" /> “Invoice Not Submitted”.</s>');
-    say.push('<s> Once the invoice is submitted, it will take 5 working days for settlement.</s>');
+    if(claimStatusIntentCalled){
+        getClaimStatus(claimId,function(responseText){
+            var say = responseText;
+        });
+    }
     response.shouldEndSession(false);
     response.say(say.join('\n'));
 });
@@ -132,7 +146,12 @@ if (process.argv.length > 2) {
     }
 }
 
-
+function getClaimStatus(claimId,callback){
+    var say = ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> "+ claimId +" </say-as>, is ,, “ON HOLD”.</s>"];
+    say.push('<s> The reason for the same is <break strength=\"medium\" /> “Invoice Not Submitted”.</s>');
+    say.push('<s> Once the invoice is submitted, it will take 5 working days for settlement.</s>');
+    callback (say);
+}
 
 const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
