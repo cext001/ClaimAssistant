@@ -214,14 +214,15 @@ alexaApp.intent('rentCancelIntent', function (request, response) {
 alexaApp.intent('rentDetailsIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say =[];
-    if (request.data.request.intent.slots.startDate.value && rentalStartDate!='' ){
+    console.log(request.data.request.intent.slots);
+    if (request.data.request.intent.slots.startDate.value && rentalStartDate =='' ){
         rentalStartDate = request.data.request.intent.slots.startDate.value;
         say =["<s> Can you tell me for how many days you would require the rental car service?</s>"];
     }
     if(rentalStartDate==''){
         say =["<s> Can you let me know the start date of the rental car service?</s>"];
     }
-    if(request.data.request.intent.slots.days.value && rentalDays!=''){
+    if(request.data.request.intent.slots.days.value && rentalDays ==''){
         rentalDays = request.data.request.intent.slots.days.value;
         getRentalConfirmation(function(responseText){
             say = responseText;
