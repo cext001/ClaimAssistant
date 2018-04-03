@@ -67,9 +67,9 @@ alexaApp.launch(function (request, response) {
     console.log('Session Obj is new ' + request.getSession().isNew());
     var say = [];
     if (request.getSession().isNew()) {
-                    say.push('<s>Hi </s>');
+                    say.push('<s>Hi</s>');
                     say.push('<s>Welcome to Claim Assistant. <break strength="medium" /></s>');   
-                    say.push('<s>What i can do for you <break strength="medium" /></s>');  
+                    say.push('<s>What can I do for you <break strength="medium" /></s>');  
                     response.shouldEndSession(false);
                     response.say(say.join('\n'));
                     response.send();
@@ -206,7 +206,7 @@ alexaApp.intent('rentConfirmIntent', function (request, response) {
 
 alexaApp.intent('rentCancelIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
-    var say =["<s> Okay.But you can book a rental car later!</s>"];
+    var say =["<s> Okay,But you can book a rental car later!</s>"];
     response.shouldEndSession(true);
     response.say(say.join('\n'));
 });
