@@ -53,18 +53,6 @@ alexaApp.accountLinkingCard = function () {
     return card;
 }
 
-alexaApp.claimStatusIntent = function (request, response) {
-	console.log('Inside claimStatusIntent');
-    var say = [];
-    // set current list of questions to empty
-    response.session('current', '{}');
-        say.push('<s>Please provide the claim number <break strength="medium" /></s>');           
-    console.log(say);
-    response.shouldEndSession(false); 
-    response.say(say.join('\n'));
-    response.send();
-    //return say;
-};
 
 alexaApp.launch(function (request, response) {
     console.log('launch ' + JSON.stringify(request));
@@ -120,14 +108,19 @@ alexaApp.intent('RepeatIntent', function (request, response) {
     response.say(q.questionAndAnswers());
 });
 
+alexaApp.intent('claimStatusIntent', function (request, response) {
+    var all = JSON.parse(request.session('all') || '{}');
+    var say = ["<s>Please provide the claim i d. <break strength=\"medium\" /></s>"];
+    response.shouldEndSession(false);
+    response.say(say.join('\n'));
+});
+
 alexaApp.intent('AnotherIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say = ["<s>Ok. Let's start another quiz. <break strength=\"medium\" /></s>"];
     say = say.concat(alexaApp.startQuiz(response, Object.keys(all)));
     response.say(say.join('\n'));
 });
-
-
 
 if (process.argv.length > 2) {
     var arg = process.argv[2];
