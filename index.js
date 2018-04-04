@@ -2,6 +2,7 @@ const express = require('express'),
 Alexa = require('alexa-app'),
 bodyParser = require('body-parser'),
 request = require('request');
+helper = require('./helper')
 //config = require('./config')
 
 const app = express();
@@ -15,6 +16,13 @@ var claimId = "";
 var resp_msg = "";
 
 app.get('/',(req,res)=>{
+  helper.getClaimStatus(00000)
+			.then((result)=>{
+				console.log(result);
+				
+			}).catch((err)=>{
+				console.log(err);					
+			})
     res.send('App running');
 });
 

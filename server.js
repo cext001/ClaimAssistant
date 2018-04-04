@@ -2,10 +2,10 @@
 
 const express = require('express'),
     bodyParser = require('body-parser'),
-    request = require('request'),
     alexa = require('alexa-app'),
     app = express(),
     alexaApp = new alexa.app("claim")
+    helper = require('./helper')
 
 alexaApp.express({
     expressApp: app,
@@ -160,9 +160,11 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     console.log(request.data.request.intent.slots.claimId.value)
     claimId=request.data.request.intent.slots.claimId.value;
     if(claimStatusIntentCalled){
-        getClaimStatus(claimId,function(responseText){
-            say = responseText;
-        });
+        helper.getClaimStatus(claimId).then((result)=>{
+            say = result;
+		}).catch((err)=>{
+			say = "Something went wrong";				
+		})
     }
     if(repairPaymentIntentCalled){
         getRepairPaymentStatus(claimId,function(responseText){
@@ -239,13 +241,6 @@ if (process.argv.length > 2) {
     if (arg === '-u' || arg === '--utterances') {
         console.log(alexaApp.utterances());
     }
-}
-
-function getClaimStatus(claimId,callback){
-    var say = ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> "+ claimId +" </say-as>, is ,, “ON HOLD”.</s>"];
-    say.push('<s> The reason for the same is <break strength=\"medium\" /> “Invoice Not Submitted”.</s>');
-    say.push('<s> Once the invoice is submitted, it will take 5 working days for settlement.</s>');
-    callback (say);
 }
 
 function getRepairPaymentStatus(claimId,callback){
