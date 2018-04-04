@@ -13,7 +13,7 @@ module.exports = {
             request(options, function (error, response, body) {
                 var speechOutput;
                 if (error) {
-                    speechOutput = ["<s>Something went wrong</s>"];
+                    speechOutput = ["<s>Something went wrong.</s><s> Please try again</s>"];
                     resolve(speechOutput);
                 } else {
                     speechOutput = ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> " + claimId + " </say-as>, is " + body.result.currentClaimStatus + ".</s>"];

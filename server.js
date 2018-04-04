@@ -122,9 +122,11 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
         claimId=request.data.request.intent.slots.claimId.value;
         console.log('claimId:'+claimId);
         claimIdPresent = true;
-        getClaimStatus(claimId,function(responseText){
-            say = responseText;
-        });
+        helper.getClaimStatus(claimId).then((result)=>{
+            say = result;
+		}).catch((err)=>{
+			say = err;				
+		})
     }
     else{
      say = ["<s>Please provide the claim number. <break strength=\"medium\" /></s>"];
