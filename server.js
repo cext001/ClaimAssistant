@@ -221,6 +221,13 @@ alexaApp.intent('rentDetailsIntent', function (request, response) {
     response.say(say.join('\n'));
 });
 
+alexaApp.intent('GermanWelcomeIntent', function (request, response) {
+    var all = JSON.parse(request.session('all') || '{}');
+    var say =["<s> Willkommen beim Politikassistenten.</s>"];
+    response.shouldEndSession(true);
+    response.say(say.join('\n'));
+    resetAll();
+});
 
 alexaApp.intent('thankIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
