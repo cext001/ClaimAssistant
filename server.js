@@ -210,7 +210,7 @@ alexaApp.intent('claimIdIntent', function (request, response) {
         helper.getClaimStatus(claimId).then((result)=>{
             say = result;
 		}).catch((err)=>{
-			say = "Something went wrong";				
+			say = err;				
 		})
     }
     if(repairPaymentIntentCalled){
