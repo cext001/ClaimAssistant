@@ -240,6 +240,7 @@ alexaApp.intent('claimIdIntent', function (request, response) {
             })
         }
         else if(repairPaymentIntentCalled){
+            console.log("inside api call");
             return helper.getClaimPaymentDetails(claimId).then((result)=>{            
                 say = "The payment status is "+result.paymentStatus;
                 claimPaymentDetails = result;
@@ -249,6 +250,7 @@ alexaApp.intent('claimIdIntent', function (request, response) {
             }).catch((err)=>{
                 say = err;				
             })
+            console.log(say);
         }
         else if(rentalCarIntentCalled){
             getRentalCarStatus(claimId,function(responseText){

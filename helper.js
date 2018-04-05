@@ -36,6 +36,7 @@ module.exports = {
         })
     },
     "getClaimPaymentDetails": function (claimId) {
+        console.log('inside getClaimPaymentDetails');
         var speechOutput = [];
         return new Promise(function (resolve, reject) {
             var options = {
@@ -51,6 +52,7 @@ module.exports = {
                     speechOutput = ["<s>Something went wrong. Please try again</s>"];
                     resolve(speechOutput);
                 }
+                console.log(body);
                 resolve(body);
             });
         });
