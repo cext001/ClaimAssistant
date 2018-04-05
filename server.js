@@ -209,6 +209,14 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     var say =[];
     console.log(request.data.request.intent.slots.claimId.value)
     claimId=request.data.request.intent.slots.claimId.value;
+    console.log(claimId.length);
+    if(claimId.length==11){
+        console.log('length 11');
+
+    }
+    else{
+        console.log('length not 11');
+    }
     if(claimStatusIntentCalled){
         helper.getClaimStatus(claimId).then((result)=>{
             say = result;
