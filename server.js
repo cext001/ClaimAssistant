@@ -224,8 +224,8 @@ alexaApp.intent('claimIdIntent', function (request, response) {
                 say = result;
                 //say= ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as=\"digits\"> 231233 </say-as>, is On Hold.</s>"];
                 console.log('after call',say);
-                //response.shouldEndSession(false);
-                //response.say(say.join('\n'));
+                response.shouldEndSession(false);
+                response.say(say.join('\n'));
 
             }).catch((err)=>{
                 say = err;				
@@ -245,12 +245,12 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     else{
         console.log('length not 11');
         say=['<s>please enter the complete claim number</s>'];
-        /*response.shouldEndSession(false);
-        response.say(say.join('\n'));*/
+        response.shouldEndSession(false);
+        response.say(say.join('\n'));
     }
     
-    response.shouldEndSession(false);
-    response.say(say.join('\n'));
+    /*response.shouldEndSession(false);
+    response.say(say.join('\n'));*/
 });
 
 alexaApp.intent('GermanClaimIdIntent', function (request, response) {
