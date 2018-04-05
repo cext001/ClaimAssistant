@@ -254,9 +254,14 @@ alexaApp.intent('claimIdIntent', function (request, response) {
             console.log(say);
         }
         else if(rentalCarIntentCalled){
-            getRentalCarStatus(claimId,function(responseText){
-                say = responseText;
-            });
+            return helper.getRentalCarStatus(claimId).then((result)=>{            
+                say = result;
+                console.log('after call',say);
+                response.shouldEndSession(false);
+                response.say(say.join('\n'));         
+            }).catch((err)=>{
+                say = err;				
+            })
         }
     }
     else{

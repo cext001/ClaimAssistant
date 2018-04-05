@@ -1,6 +1,8 @@
 const request = require('request'),
     config = require('./config');
 
+var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'];
+
 module.exports = {
     "getClaimStatus": function (claimId) {
         var speechOutput = [];
@@ -56,5 +58,42 @@ module.exports = {
                 resolve(body);
             });
         });
+    },
+    "getRentalCarStatus": function (claimId) {
+        var speechOutput = [];
+        console.log('InsideHelper Claim Id:', claimId);
+        return new Promise(function (resolve, reject) {
+            var options = {
+                method: 'POST',
+                url: config.claimStatusApiURL,
+                headers: { 'cache-control': 'no-cache', authorization: 'Basic c3U6Z3c=', 'content-type': 'application/json' },
+                body: { jsonrpc: '2.0', method: 'rentalCarBookingStatus', params: [claimId] },
+                json: true
+            };
+            request(options, function (error, response, body) {
+                if (error) {
+                    console.log(error);
+                    speechOutput = ["<s>Something went wrong. Please try again</s>"];
+                    resolve(speechOutput);
+                } else {
+                    if (body.error) {
+                        console.log('Inside body error', body.error.message);
+                        if (body.error.message == 'No Claim entity found')
+                            speechOutput = ['<s>The claim number is not found.Please enter a valid one</s>'];
+                    } else {                        
+                        if (body.result[0].bookingStatus) {
+                            var month = months[body.result[0].bookingStartDate.getMonth()];
+                            speechOutput = ['<s> The car has been booked with the Rental agency <break strength=\"medium\" /> '+body.result[0].agency +' and the reservation number is <say-as interpret-as=\"spell-out\">'+body.result[0].reservationID+'</say-as>. </s>'];
+                            speechOutput.push('<s> The car will be delivered on<break strength=\"medium\" />' + month + '<say-as interpret-as="ordinal">'+body.result[0].bookingStartDate.getDate()+'</say-as> 9AM</s>');
+                        }
+                        else{
+                            speechOutput = ['<s> The car has not been booked </s>'];
+                        }
+                    }
+                    console.log(speechOutput);
+                    resolve(speechOutput);
+                }
+            });
+        })
     }
 };
