@@ -20,7 +20,7 @@ module.exports = {
                     console.log(error);
                     speechOutput = ["<s>Something went wrong. Please try again</s>"];
                     //resolve(speechOutput);
-                    callback(speechOutput);
+                   // callback(speechOutput);
                 } else {
                     if(body.error){
                         console.log('Inside body error',body.error.message);
@@ -33,7 +33,7 @@ module.exports = {
                     }                
                     console.log(speechOutput);
                     //resolve(speechOutput);
-                    callback(speechOutput);
+                    //callback(speechOutput);
                 }
             });
             response.shouldEndSession(false);
