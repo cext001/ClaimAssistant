@@ -13,12 +13,17 @@ module.exports = {
             request(options, function (error, response, body) {
                 var speechOutput;
                 if (error) {
-                    speechOutput = ["<s>Something went wrong.</s><s> Please try again</s>"];
+                    speechOutput = ["<s>Something went wrong. Please try again</s>"];
                     resolve(speechOutput);
                 } else {
-                    speechOutput = ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> " + claimId + " </say-as>, is " + body.result.currentClaimStatus + ".</s>"];
-                    speechOutput.push('<s> The reason for the same is <break strength=\"medium\" />' + body.result.reason + '.</s>');
-                    speechOutput.push('<s> Once the invoice is submitted, it will take 5 working days for settlement.</s>');
+                    if(body.hasOwnProperty('error')){
+                        speechOutput = ["<s>"+body.error.message+"</s>"];
+                    } else {
+                        speechOutput = ["<s>According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> " + claimId + " </say-as>, is " + body.result.currentClaimStatus + ".</s>"];
+                        if (body.result.currentClaimStatus === "On Hold") {
+                            speechOutput.push('<s>The reason for the same is <break strength=\"medium\" />' + body.result.reason + '.</s>');
+                        }
+                    }                    
                     resolve(speechOutput);
                 }
             });
