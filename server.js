@@ -240,9 +240,15 @@ alexaApp.intent('claimIdIntent', function (request, response) {
             })
         }
         else if(repairPaymentIntentCalled){
-            getRepairPaymentStatus(claimId,function(responseText){
-                say = responseText;
-            });
+            return helper.getClaimPaymentDetails(claimId).then((result)=>{            
+                say = "The payment status is "+result.paymentStatus;
+                claimPaymentDetails = result;
+                console.log('after call',say);
+                response.shouldEndSession(false);
+                response.say(say.join('\n'));         
+            }).catch((err)=>{
+                say = err;				
+            })
         }
         else if(rentalCarIntentCalled){
             getRentalCarStatus(claimId,function(responseText){
