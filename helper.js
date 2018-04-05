@@ -13,9 +13,9 @@ module.exports = {
                 json: true
             };
             request(options, function (error, response, body) {
-                console.log('error:',error);
-                console.log('body:',body);
-                console.log('response:',response);
+                //console.log('error:',error);
+                //console.log('body:',body);
+               // console.log('response:',response);
                 
                 if (error) {
                     console.log(error);

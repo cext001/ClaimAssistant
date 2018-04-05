@@ -219,6 +219,7 @@ alexaApp.intent('claimIdIntent', function (request, response) {
         claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
         console.log('After change::',claimId);
         if(claimStatusIntentCalled){
+            console.log('Inside claimStatusIntentCalled');
             helper.getClaimStatus(claimId).then((result)=>{
                 say = result;
                 //say= ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as=\"digits\"> 231233 </say-as>, is On Hold.</s>"];
