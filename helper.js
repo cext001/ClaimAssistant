@@ -2,6 +2,7 @@ const request = require('request');
 
 module.exports = {
     "getClaimStatus": function (claimId) {
+        console.log('InsideHelper Claim Id:',claimId);
         return new Promise(function (resolve, reject) {
             var options = {
                 method: 'POST',
@@ -13,6 +14,7 @@ module.exports = {
             request(options, function (error, response, body) {
                 var speechOutput;
                 if (error) {
+                    console.log(error);
                     speechOutput = ["<s>Something went wrong. Please try again</s>"];
                     resolve(speechOutput);
                 } else {
