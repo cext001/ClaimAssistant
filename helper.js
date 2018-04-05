@@ -105,6 +105,7 @@ module.exports = {
             rentalDays = rentalDays.match(/\d+/)[0];
             var startDate = new Date(rentalStartDate);
             rentalStartDate = startDate.getDate()+'/'+(startDate.getMonth())+'/'+startDate.getFullYear();
+            console.log('Claim Id',claimId);
             console.log('rentalstartDate',rentalStartDate);
             console.log('RentalDays',rentalDays);
             var options = {
