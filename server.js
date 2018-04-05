@@ -212,7 +212,8 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     console.log(claimId.length);
     if(claimId.length==11){
         console.log('length 11');
-
+        claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
+        console.log('After change::',claimId);
     }
     else{
         console.log('length not 11');
