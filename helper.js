@@ -13,10 +13,6 @@ module.exports = {
                 json: true
             };
             request(options, function (error, response, body) {
-                //console.log('error:',error);
-                //console.log('body:',body);
-               // console.log('response:',response);
-                
                 if (error) {
                     console.log(error);
                     speechOutput = ["<s>Something went wrong. Please try again</s>"];
@@ -26,7 +22,7 @@ module.exports = {
                         console.log('Inside body error',body.error.message);
                         speechOutput = ['<s>'+body.error.message+'</s>'];
                     } else {
-                        speechOutput = ["<s>According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as=\"digits\"> 231233 </say-as>, is " + body.result.currentClaimStatus + ".</s>"];
+                        speechOutput = ["<s>According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as=\"digits\"> "+claimId+" </say-as>, is " + body.result.currentClaimStatus + ".</s>"];
                         if (body.result.currentClaimStatus === "On Hold") {
                             speechOutput.push('<s>The reason for the same is <break strength=\"medium\" />' + body.result.reason + '.</s>');
                         }
