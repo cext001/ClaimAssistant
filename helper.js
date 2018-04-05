@@ -23,7 +23,7 @@ module.exports = {
                 } else {
                     if(body.error){
                         console.log('Inside body error',body.error.message);
-                        speechOutput = ["'<s>"+body.error.message+"</s>'"];
+                        speechOutput = ['<s>'+body.error.message+'</s>'];
                     } else {
                         speechOutput = ["<s>According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> " + claimId + " </say-as>, is " + body.result.currentClaimStatus + ".</s>"];
                         if (body.result.currentClaimStatus === "On Hold") {
