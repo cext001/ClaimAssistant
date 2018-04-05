@@ -26,6 +26,7 @@ var rentalStartDate = '';
 var rentalDays = '';
 var claimId = '';
 var locale = '';
+var claimPaymentDetails = {};
 
 //Simple card
 alexaApp.card = function (current) {
@@ -98,6 +99,7 @@ alexaApp.launch(function (request, response) {
             rentalStartDate = '';
             rentalDays = '';
             claimId = '';
+            claimPaymentDetails = {};
                         say.push('<s>Hi</s>');
                         say.push('<s>Welcome to Claim Assistant. <break strength="medium" /></s>');   
                         say.push('<s>What can I do for you <break strength="medium" /></s>');  
@@ -161,20 +163,26 @@ alexaApp.intent('GermanClaimStatusIntent', function (request, response) {
 
 
 alexaApp.intent('repairPaymentIntent', function (request, response) {
-    var all = JSON.parse(request.session('all') || '{}');
+    var all = JSON.parse(request.session('all') || '{}');   
+
     repairPaymentIntentCalled = true;
     console.log('inside repairPaymentIntent');
     console.log(request.data.request.intent.slots)
     var say=[];
-    
+
     if (request.data.request.intent.slots.claimId.value){
         claimId=request.data.request.intent.slots.claimId.value;
         console.log('claimId:'+claimId);
         claimIdPresent = true;
         claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
-        getRepairPaymentStatus(claimId,function(responseText){
-            say = responseText;
-        });
+        
+        return helper.getClaimPaymentDetails(claimId).then((result)=>{            
+            say = "The payment status is "+result.paymentStatus;
+            claimPaymentDetails = result;           
+		}).catch((err)=>{
+			say = err;				
+		})
+        
         console.log(say);
     }
     else{
@@ -347,10 +355,10 @@ if (process.argv.length > 2) {
     }
 }
 
-function getRepairPaymentStatus(claimId,callback){
-    var say = ["<s> This claim is ,<break strength=\"medium\" /> “Paid in Full”.</s>"];
-    say.push('<s> The amount of $150.55 is credited to your bank account number <break strength=\"medium\" /> <say-as interpret-as="spell-out">ABC121212</say-as> </s>');
-    say.push('<s> on 1st April 2018 at 3:00 PM GMT.</s>');
+function getRepairPaymentDetailsMessage(callback){
+    var say = ["<s>This claim is ,<break strength=\"medium\" /> "+claimPaymentDetails.result.paymentStatus+"</s>"];
+    say.push('<s>The amount of $'+result.totalPayments.amount+' is credited to your bank account number <break strength=\"medium\" /> <say-as interpret-as="spell-out">'+result.bankAccountNumber+'</say-as> </s>');
+    say.push('<s>on '+result.paymentDate+'.</s>');
     callback (say);
 }
 
@@ -379,6 +387,16 @@ function resetAll(){
     claimId = '';
     locale = '';
 }
+
+alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
+    var all = JSON.parse(request.session('all') || '{}');
+    var say = [];
+    if(claimIdPresent && (Object.keys(claimPaymentDetails).length !== 0) && repairPaymentIntentCalled && 
+        (claimPaymentDetails.paymentStatus === "Issued" || claimPaymentDetails.paymentStatus === "Cleared")) {
+        say = getRepairPaymentDetailsMessage();
+    }
+    //need to provide some message in the else part here
+});
 
 const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
