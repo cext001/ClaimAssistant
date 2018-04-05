@@ -124,7 +124,8 @@ module.exports = {
                         console.log('Inside body error', body.error.message);
                         if (body.error.message == 'No Claim entity found')
                             speechOutput = ['<s>The claim number is not found.Please enter a valid one</s>'];
-                    } else {                        
+                    } else { 
+                        console.log(body);                       
                         if (body.result[0].bookingStatus) {
                             var rentStartDate = new Date (body.result[0].bookingStartDate);
                             console.log('rentstartdate',rentStartDate);
