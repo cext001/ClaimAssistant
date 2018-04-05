@@ -101,14 +101,17 @@ module.exports = {
     },
     "getRentalConfirmation": function (claimId,rentalStartDate,rentalDays) {
         var speechOutput = [];
-        console.log('rentalstartDate',rentalStartDate);
-        console.log('RentalDays',rentalDays.match(/\d+/)[0]);
         return new Promise(function (resolve, reject) {
+            rentalDays = rentalDays.match(/\d+/)[0];
+            var startDate = new Date(rentalStartDate);
+            rentalStartDate = startDate.getDate()+'/'+(startDate.getMonth())+'/'+startDate.getFullYear();
+            console.log('rentalstartDate',rentalStartDate);
+            console.log('RentalDays',rentalDays);
             var options = {
                 method: 'POST',
                 url: config.claimStatusApiURL,
                 headers: { 'cache-control': 'no-cache', authorization: 'Basic c3U6Z3c=', 'content-type': 'application/json' },
-                body: { jsonrpc: '2.0', method: 'rentalCarBookingStatus', params: [claimId] },
+                body: { jsonrpc: '2.0', method: 'rentalCarBookingRequest', params: [claimId,rentalStartDate,rentalDays] },
                 json: true
             };
             request(options, function (error, response, body) {
