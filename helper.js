@@ -1,7 +1,7 @@
 const request = require('request');
 
 module.exports = {
-    "getClaimStatus": function (claimId,response) {
+    "getClaimStatus": function (claimId) {
         var speechOutput =[];
         console.log('InsideHelper Claim Id:',claimId);
         //return new Promise(function (resolve, reject) {
@@ -20,7 +20,7 @@ module.exports = {
                     console.log(error);
                     speechOutput = ["<s>Something went wrong. Please try again</s>"];
                     //resolve(speechOutput);
-                   // callback(speechOutput);
+                    //callback(speechOutput);
                 } else {
                     if(body.error){
                         console.log('Inside body error',body.error.message);
@@ -36,9 +36,7 @@ module.exports = {
                     //callback(speechOutput);
                 }
             });
-            response.shouldEndSession(false);
-            response.say(speechOutput.join('\n'));
-            return true;
+            return speechOutput;
         //})
     }
 };
