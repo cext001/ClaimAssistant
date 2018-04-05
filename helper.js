@@ -1,4 +1,5 @@
-const request = require('request');
+const request = require('request'),
+config = require('./config');
 
 module.exports = {
     "getClaimStatus": function (claimId) {
@@ -7,7 +8,7 @@ module.exports = {
         return new Promise(function (resolve, reject) {
             var options = {
                 method: 'POST',
-                url: 'http://35.154.116.87:8080/cc/service/edge/claim/vhv',
+                url: config.claimStatusApiURL,
                 headers: { 'cache-control': 'no-cache', authorization: 'Basic c3U6Z3c=', 'content-type': 'application/json' },
                 body: { jsonrpc: '2.0', method: 'getClaimSummary', params: [claimId] },
                 json: true
