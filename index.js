@@ -16,7 +16,7 @@ var claimId = "";
 var resp_msg = "";
 
 app.get('/',(req,res)=>{
-  helper.getClaimStatus(00000)
+  helper.getClaimStatus('000-00-006906')
 			.then((result)=>{
 				console.log(result);
 				
