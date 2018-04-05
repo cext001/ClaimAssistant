@@ -26,6 +26,7 @@ var rentalStartDate = '';
 var rentalDays = '';
 var claimId = '';
 var locale = '';
+
 //Simple card
 alexaApp.card = function (current) {
     console.log('createCard: current=', current);
