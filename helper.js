@@ -15,7 +15,7 @@ module.exports = {
                 console.log('error:',error);
                 console.log('body:',body);
                 console.log('response:',response);
-                var speechOutput;
+                var speechOutput =[];
                 if (error) {
                     console.log(error);
                     speechOutput = ["<s>Something went wrong. Please try again</s>"];
