@@ -123,6 +123,7 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
         claimId=request.data.request.intent.slots.claimId.value;
         console.log('claimId:'+claimId);
         claimIdPresent = true;
+        claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
         helper.getClaimStatus(claimId).then((result)=>{
             say = result;
 		}).catch((err)=>{
@@ -146,6 +147,7 @@ alexaApp.intent('GermanClaimStatusIntent', function (request, response) {
         claimId=request.data.request.intent.slots.claimId.value;
         console.log('claimId:'+claimId);
         claimIdPresent = true;
+        claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
         getClaimStatusGerman(claimId,function(responseText){
             say = responseText;
         });
@@ -169,6 +171,7 @@ alexaApp.intent('repairPaymentIntent', function (request, response) {
         claimId=request.data.request.intent.slots.claimId.value;
         console.log('claimId:'+claimId);
         claimIdPresent = true;
+        claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
         getRepairPaymentStatus(claimId,function(responseText){
             say = responseText;
         });
@@ -192,6 +195,7 @@ alexaApp.intent('rentalCarIntent', function (request, response) {
         claimId=request.data.request.intent.slots.claimId.value;
         console.log('claimId:'+claimId);
         claimIdPresent = true;
+        claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
         getRentalCarStatus(claimId,function(responseText){
             say = responseText;
         });
@@ -214,27 +218,29 @@ alexaApp.intent('claimIdIntent', function (request, response) {
         console.log('length 11');
         claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
         console.log('After change::',claimId);
+        if(claimStatusIntentCalled){
+            helper.getClaimStatus(claimId).then((result)=>{
+                say = result;
+            }).catch((err)=>{
+                say = err;				
+            })
+        }
+        if(repairPaymentIntentCalled){
+            getRepairPaymentStatus(claimId,function(responseText){
+                say = responseText;
+            });
+        }
+        if(rentalCarIntentCalled){
+            getRentalCarStatus(claimId,function(responseText){
+                say = responseText;
+            });
+        }
     }
     else{
         console.log('length not 11');
+        say=['<s>please enter the complete claim number</s>'];
     }
-    if(claimStatusIntentCalled){
-        helper.getClaimStatus(claimId).then((result)=>{
-            say = result;
-		}).catch((err)=>{
-			say = err;				
-		})
-    }
-    if(repairPaymentIntentCalled){
-        getRepairPaymentStatus(claimId,function(responseText){
-            say = responseText;
-        });
-    }
-    if(rentalCarIntentCalled){
-        getRentalCarStatus(claimId,function(responseText){
-            say = responseText;
-        });
-    }
+    
     response.shouldEndSession(false);
     response.say(say.join('\n'));
 });
