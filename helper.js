@@ -3,7 +3,7 @@ const request = require('request');
 module.exports = {
     "getClaimStatus": function (claimId) {
         console.log('InsideHelper Claim Id:',claimId);
-        return new Promise(function (resolve, reject) {
+        //return new Promise(function (resolve, reject) {
             var options = {
                 method: 'POST',
                 url: 'http://35.154.116.87:8080/cc/service/edge/claim/vhv',
@@ -19,7 +19,8 @@ module.exports = {
                 if (error) {
                     console.log(error);
                     speechOutput = ["<s>Something went wrong. Please try again</s>"];
-                    resolve(speechOutput);
+                    //resolve(speechOutput);
+                    return speechOutput;
                 } else {
                     if(body.error){
                         console.log('Inside body error',body.error.message);
@@ -31,9 +32,10 @@ module.exports = {
                         }
                     }                
                     console.log(speechOutput);
-                    resolve(speechOutput);
+                    //resolve(speechOutput);
+                    return speechOutput;
                 }
             });
-        })
+        //})
     }
 };
