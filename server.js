@@ -242,8 +242,8 @@ alexaApp.intent('claimIdIntent', function (request, response) {
                 response.say(say.join('\n'));   
             });
         }
-        response.shouldEndSession(false);
-        response.say(say.join('\n'));   
+        /*response.shouldEndSession(false);
+        response.say(say.join('\n'));   */
     }
     else{
         console.log('length not 11');
