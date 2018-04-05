@@ -82,9 +82,11 @@ module.exports = {
                             speechOutput = ['<s>The claim number is not found.Please enter a valid one</s>'];
                     } else {                        
                         if (body.result[0].bookingStatus) {
-                            var month = months[body.result[0].bookingStartDate.getMonth()];
+                            var rentStartDate = new Date (body.result[0].bookingStartDate);
+                            console.log('rentstartdate',rentStartDate);
+                            var month = months[rentStartDate.getMonth()];
                             speechOutput = ['<s> The car has been booked with the Rental agency <break strength=\"medium\" /> '+body.result[0].agency +' and the reservation number is <say-as interpret-as=\"spell-out\">'+body.result[0].reservationID+'</say-as>. </s>'];
-                            speechOutput.push('<s> The car will be delivered on<break strength=\"medium\" />' + month + '<say-as interpret-as="ordinal">'+body.result[0].bookingStartDate.getDate()+'</say-as> 9AM</s>');
+                            speechOutput.push('<s> The car will be delivered on<break strength=\"medium\" />' + month + '<say-as interpret-as="ordinal">'+rentStartDate.getDate()+'</say-as> 9AM</s>');
                         }
                         else{
                             speechOutput = ['<s> The car has not been booked </s>'];
