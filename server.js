@@ -210,7 +210,7 @@ alexaApp.intent('rentalCarIntent', function (request, response) {
 
 alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
-    var say =[];
+    var say =['default response'];
     console.log(request.data.request.intent.slots.claimId.value)
     claimId=request.data.request.intent.slots.claimId.value;
     console.log(claimId.length);
@@ -244,6 +244,8 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     else{
         console.log('length not 11');
         say=['<s>please enter the complete claim number</s>'];
+        response.shouldEndSession(false);
+        response.say(say.join('\n'));
     }
     
     /*response.shouldEndSession(false);
