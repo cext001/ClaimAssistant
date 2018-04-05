@@ -29,7 +29,8 @@ module.exports = {
                         if (body.result.currentClaimStatus === "On Hold") {
                             speechOutput.push('<s>The reason for the same is <break strength=\"medium\" />' + body.result.reason + '.</s>');
                         }
-                    }                    
+                    }                
+                    console.log(speechOutput);
                     resolve(speechOutput);
                 }
             });

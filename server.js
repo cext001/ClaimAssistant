@@ -221,6 +221,7 @@ alexaApp.intent('claimIdIntent', function (request, response) {
         if(claimStatusIntentCalled){
             helper.getClaimStatus(claimId).then((result)=>{
                 say = result;
+                console.log('after call',say);
             }).catch((err)=>{
                 say = err;				
             })
