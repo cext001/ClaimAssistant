@@ -205,9 +205,16 @@ alexaApp.intent('rentalCarIntent', function (request, response) {
         console.log('claimId:'+claimId);
         claimIdPresent = true;
         claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
-        getRentalCarStatus(claimId,function(responseText){
-            say = responseText;
-        });
+        return helper.getRentalCarStatus(claimId).then((result)=>{            
+            say = result;
+            console.log('after call',say);
+            response.shouldEndSession(false);
+            response.say(say.join('\n'));         
+        }).catch((err)=>{
+            say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
+            response.shouldEndSession(true);
+            response.say(say.join('\n'));				
+        })
         console.log(say);
     }
     else{
@@ -237,7 +244,9 @@ alexaApp.intent('claimIdIntent', function (request, response) {
                 response.say(say.join('\n'));
 
             }).catch((err)=>{
-                say = err;				
+                say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
+                response.shouldEndSession(true);
+                response.say(say.join('\n'));				
             })
         }
         else if(repairPaymentIntentCalled){
@@ -249,7 +258,9 @@ alexaApp.intent('claimIdIntent', function (request, response) {
                 response.shouldEndSession(false);
                 response.say(say.join('\n'));         
             }).catch((err)=>{
-                say = err;				
+                say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
+                response.shouldEndSession(true);
+                response.say(say.join('\n'));				
             })
             console.log(say);
         }
@@ -260,7 +271,9 @@ alexaApp.intent('claimIdIntent', function (request, response) {
                 response.shouldEndSession(false);
                 response.say(say.join('\n'));         
             }).catch((err)=>{
-                say = err;				
+                say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
+                response.shouldEndSession(true);
+                response.say(say.join('\n'));				
             })
         }
     }
@@ -299,7 +312,7 @@ alexaApp.intent('GermanClaimIdIntent', function (request, response) {
     response.say(say.join('\n'));
 });
 
-alexaApp.intent('rentConfirmIntent', function (request, response) {
+alexaApp.intent('rentalConfirmIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say = ["<s> As per your policy, you are eligible for 30 days rental car service not exceeding $35 a day.</s>"];
     say.push('<s> Can you let me know the start date of the rental car service?</s>');
@@ -307,7 +320,7 @@ alexaApp.intent('rentConfirmIntent', function (request, response) {
     response.say(say.join('\n'));
 });
 
-alexaApp.intent('rentCancelIntent', function (request, response) {
+alexaApp.intent('rentalCancelIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say =["<s> Okay,But you can book a rental car later!</s>"];
     response.shouldEndSession(true);
@@ -315,7 +328,7 @@ alexaApp.intent('rentCancelIntent', function (request, response) {
     resetAll();
 });
 
-alexaApp.intent('rentDetailsIntent', function (request, response) {
+alexaApp.intent('rentalDetailsIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say =[];
     console.log(request.data.request.intent.slots);
@@ -329,10 +342,16 @@ alexaApp.intent('rentDetailsIntent', function (request, response) {
     }
     if(request.data.request.intent.slots.days.value && rentalDays ==''){
         rentalDays = request.data.request.intent.slots.days.value;
-        getRentalConfirmation(rentalStartDate,function(responseText){
-            say = responseText;
-            console.log(say);
-        });
+        return helper.getRentalConfirmation(claimId,rentalStartDate,rentalDays).then((result)=>{            
+            say = result;
+            console.log('after call',say);
+            response.shouldEndSession(false);
+            response.say(say.join('\n'));         
+        }).catch((err)=>{
+            say = ["<s> Something went wrong while processing your request.</s><s>Please try again</s>"];
+            response.shouldEndSession(true);
+            response.say(say.join('\n'));				
+        })
     }
     if(rentalDays==''){
         say =["<s> Can you tell me for how many days you would require the rental car service?</s>"];
@@ -376,7 +395,7 @@ function getRepairPaymentDetailsMessage(callback){
     callback (say);
 }
 
-function getRentalCarStatus(claimId,callback){
+/*function getRentalCarStatus(claimId,callback){
     var say = ["<s> The Rental car has not been booked yet as the option was not selected when the claim was created.</s>"];
     say.push('<s> <break strength=\"medium\" /> Do you want to book one? </s>');
     callback (say);
@@ -389,7 +408,7 @@ function getRentalConfirmation(startDate,callback){
     say.push('<s> The car will be delivered on<break strength=\"medium\" />');
     say.push('April 5, 9AM.</s>');    
     callback (say);
-}
+}*/
 
 function resetAll(){
     claimStatusIntentCalled = false;
@@ -400,6 +419,7 @@ function resetAll(){
     rentalDays = '';
     claimId = '';
     locale = '';
+    claimPaymentDetails = {};
 }
 
 alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
