@@ -21,7 +21,7 @@ module.exports = {
                     speechOutput = ["<s>Something went wrong. Please try again</s>"];
                     resolve(speechOutput);
                 } else {
-                    if(body.hasOwnProperty('error')){
+                    if(body.error){
                         speechOutput = ["<s>"+body.error.message+"</s>"];
                     } else {
                         speechOutput = ["<s>According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as='digits'> " + claimId + " </say-as>, is " + body.result.currentClaimStatus + ".</s>"];
