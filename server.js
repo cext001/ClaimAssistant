@@ -210,7 +210,7 @@ alexaApp.intent('rentalCarIntent', function (request, response) {
 
 alexaApp.intent('claimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
-    var say =[];
+    var say =["<s> Default response.</s>"];
     console.log(request.data.request.intent.slots.claimId.value)
     claimId=request.data.request.intent.slots.claimId.value;
     console.log(claimId.length);
