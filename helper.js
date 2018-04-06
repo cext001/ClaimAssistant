@@ -79,7 +79,7 @@ module.exports = {
                     if (body.error) {
                         console.log('Inside body error', body.error.message);
                         if (body.error.message == 'No Claim entity found')
-                            speechOutput = ['<s>The claim number is not found.Please enter a valid one</s>'];
+                            speechOutput = ['<s>The claim number is not found.</s><s>Please enter a valid one</s>'];
                     } else {
                         if (body.result.bookingStatus) {
                             var rentStartDate = new Date(body.result.bookingStartDate);
