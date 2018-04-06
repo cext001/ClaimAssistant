@@ -45,7 +45,7 @@ module.exports = {
                 method: 'POST',
                 url: config.claimStatusApiURL,
                 headers: { authorization: 'Basic c3U6Z3c=', 'content-type': 'application/json' },
-                body: { jsonrpc: '2.0', method: 'getClaimPaymentDetails', params: ['000-00-006906'] },
+                body: { jsonrpc: '2.0', method: 'getClaimPaymentDetails', params: [claimId] },
                 json: true
             };
             request(options, function (error, response, body) {

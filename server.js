@@ -469,7 +469,7 @@ alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
         (claimPaymentDetails.paymentStatus === "Issued" || claimPaymentDetails.paymentStatus === "Cleared")) {
         say = getRepairPaymentDetailsMessage();
     } else {
-        var say = ["<s>Since the payment status is "+claimPaymentDetails.result.paymentStatus+", we are unavailable to provide the details. Please try something else.</s>"];
+        var say = ["<s>Since the payment status is "+claimPaymentDetails.paymentStatus+", we are unavailable to provide the details. Please try something else.</s>"];
     }
     response.shouldEndSession(false);
     response.say(say.join('\n'));
