@@ -228,7 +228,7 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     var say =['default response'];
     console.log(request.data.request.intent.slots.claimId.value)
     claimId=request.data.request.intent.slots.claimId.value;
-    console.log("claim id length"+claimId.length);
+    console.log("claim id length"+helper.formatClaimId(claimId));
     console.log("claim id type"+typeof claimId.length);
     if(claimId.length==11){
         console.log('length 11');
