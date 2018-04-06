@@ -432,7 +432,7 @@ if (process.argv.length > 2) {
 }
 
 function getRepairPaymentDetailsMessage(callback){
-    say.push('<s>The amount of $'+claimPaymentDetails.totalPayments.amount+' is credited to your bank account number <break strength=\"medium\" /> <say-as interpret-as="spell-out">'+claimPaymentDetails.bankAccountNumber+'</say-as> </s>');
+    var say = ['<s>The amount of $'+claimPaymentDetails.totalPayments.amount+' is credited to your bank account number <break strength=\"medium\" /> <say-as interpret-as="spell-out">'+claimPaymentDetails.bankAccountNumber+'</say-as> </s>'];
     say.push('<s>on '+claimPaymentDetails.paymentDate+'.</s>');
     callback (say);
 }
