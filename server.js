@@ -480,7 +480,7 @@ alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
             say = result;
         });
     } else {
-        var say = ["<s>Since the payment status is "+claimPaymentDetails.paymentStatus+", we are unavailable to provide the details.</s>"];
+        say = ["<s>Since the payment status is "+claimPaymentDetails.paymentStatus+", we are unavailable to provide the details.</s>"];
     }
     response.shouldEndSession(false);
     response.say(say.join('\n'));
