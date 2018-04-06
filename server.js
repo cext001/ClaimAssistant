@@ -471,7 +471,9 @@ alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
     console.log('repairPaymentDetailsIntent');
     console.log(claimPaymentDetails);
     console.log(repairPaymentIntentCalled);
-    console.log(claimPaymentDetails.paymentStatus);
+    console.log(paymentStatus);
+    console.log(typeof paymentStatus);
+    console.log(Object.keys(claimPaymentDetails).length);
     
     if(claimIdPresent && (Object.keys(claimPaymentDetails).length !== 0) && repairPaymentIntentCalled && 
         (paymentStatus == "Issued" || paymentStatus == "Cleared")) {
