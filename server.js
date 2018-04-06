@@ -169,7 +169,6 @@ alexaApp.intent('repairPaymentIntent', function (request, response) {
     console.log('inside repairPaymentIntent');
     console.log(request.data.request.intent.slots)
     var say=[];
-    console.log(typeof request.data.request.intent.slots.claimId.value);
     console.log(request.data.request.intent.slots.claimId.value);
     if (request.data.request.intent.slots.claimId.value){
         claimId=request.data.request.intent.slots.claimId.value;
@@ -229,7 +228,7 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     var say =['default response'];
     console.log(request.data.request.intent.slots.claimId.value)
     claimId=request.data.request.intent.slots.claimId.value;
-    console.log(claimId.length);
+    console.log("claim id type"+typeof claimId.length);
     if(claimId.length==11){
         console.log('length 11');
         claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
@@ -433,3 +432,16 @@ alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
 const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
 });
+
+Number.prototype.pad = function (size) {
+    var s = String(this);
+    while (s.length < (size || 2)) { s = "0" + s; }
+    return s;
+}
+
+function formatClaimId(claimId) {
+    if (claimId.toString().length <= 11) {
+        claimId = claimId.pad(11);
+    }
+    return claimId;
+}
