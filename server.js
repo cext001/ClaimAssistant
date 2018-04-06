@@ -284,8 +284,6 @@ alexaApp.intent('claimIdIntent', function (request, response) {
         response.say(say.join('\n'));
     }
     
-    /*response.shouldEndSession(false);
-    response.say(say.join('\n'));*/
 });
 
 alexaApp.intent('GermanClaimIdIntent', function (request, response) {
