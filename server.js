@@ -435,3 +435,16 @@ alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
 const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
 });
+
+Number.prototype.pad = function (size) {
+    var s = String(this);
+    while (s.length < (size || 2)) { s = "0" + s; }
+    return s;
+}
+
+function formatClaimId(claimId) {
+    if (claimId.toString().length <= 11) {
+        claimId = claimId.pad(11);
+    }
+    return claimId;
+}

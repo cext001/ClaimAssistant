@@ -16,13 +16,8 @@ var claimId = "";
 var resp_msg = "";
 
 app.get('/',(req,res)=>{
-  helper.getClaimStatus('000-00-006906')
-			.then((result)=>{
-				console.log(result);
-				
-			}).catch((err)=>{
-				console.log(err);					
-			})
+  var test = formatClaimId(31241242);
+  console.log(test);
     res.send('App running');
 });
 
