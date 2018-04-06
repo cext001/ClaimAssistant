@@ -55,7 +55,7 @@ module.exports = {
                     resolve(speechOutput);
                 }
                 console.log(body);
-                resolve(body);
+                resolve(body.result);
             });
         });
     },
