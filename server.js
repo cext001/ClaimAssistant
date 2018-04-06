@@ -197,7 +197,7 @@ alexaApp.intent('rentalCarIntent', function (request, response) {
     var say=[];
     
     if (request.data.request.intent.slots.claimId.value){
-        claimId=request.data.request.intent.slots.claimId.value;
+        claimId=request.data.request.intent.slots.claimId.vaalue;
         console.log('claimId:'+claimId);
         if(claimId.length==11){
             claimIdPresent = true;
@@ -475,8 +475,7 @@ alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
     console.log(typeof paymentStatus);
     console.log(Object.keys(claimPaymentDetails).length);
     
-    if(claimIdPresent && (Object.keys(claimPaymentDetails).length != 0) && repairPaymentIntentCalled && 
-        (paymentStatus == "Issued" || paymentStatus == "Cleared")) {
+    if((Object.keys(claimPaymentDetails).length != 0) && repairPaymentIntentCalled && (paymentStatus == "Issued" || paymentStatus == "Cleared")) {
         say = getRepairPaymentDetailsMessage();
     } else {
         var say = ["<s>Since the payment status is "+claimPaymentDetails.paymentStatus+", we are unavailable to provide the details. Please try something else.</s>"];
