@@ -412,7 +412,6 @@ if (process.argv.length > 2) {
 }
 
 function getRepairPaymentDetailsMessage(callback){
-    var say = ["<s>This claim is ,<break strength=\"medium\" /> "+claimPaymentDetails.result.paymentStatus+"</s>"];
     say.push('<s>The amount of $'+result.totalPayments.amount+' is credited to your bank account number <break strength=\"medium\" /> <say-as interpret-as="spell-out">'+result.bankAccountNumber+'</say-as> </s>');
     say.push('<s>on '+result.paymentDate+'.</s>');
     callback (say);
