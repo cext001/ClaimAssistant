@@ -451,8 +451,11 @@ alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
     if(claimIdPresent && (Object.keys(claimPaymentDetails).length !== 0) && repairPaymentIntentCalled && 
         (claimPaymentDetails.paymentStatus === "Issued" || claimPaymentDetails.paymentStatus === "Cleared")) {
         say = getRepairPaymentDetailsMessage();
+    } else {
+        var say = ["<s>Since the payment status is "+claimPaymentDetails.result.paymentStatus+", we are unavailable to provide the details. Please try something else.</s>"];
     }
-    //need to provide some message in the else part here
+    response.shouldEndSession(false);
+    response.say(say.join('\n'));
 });
 
 const server = app.listen(process.env.PORT || 5000, () => {
