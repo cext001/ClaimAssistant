@@ -27,6 +27,7 @@ var rentalDays = '';
 var claimId = '';
 var locale = '';
 var claimPaymentDetails = {};
+var paymentStatus = '';
 
 //Simple card
 alexaApp.card = function (current) {
@@ -255,6 +256,7 @@ alexaApp.intent('claimIdIntent', function (request, response) {
             return helper.getClaimPaymentDetails(claimId).then((result)=>{            
                 say = ["<s> The payment status is "+result.paymentStatus+"</s>"];
                 claimPaymentDetails = result;
+                paymentStatus = claimPaymentDetails.paymentStatus;
                 console.log('after call',say);
                 response.shouldEndSession(false);
                 response.say(say.join('\n'));         
@@ -460,6 +462,7 @@ function resetAll(){
     claimId = '';
     locale = '';
     claimPaymentDetails = {};
+    paymentStatus = '';
 }
 
 alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
@@ -469,8 +472,9 @@ alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
     console.log(claimPaymentDetails);
     console.log(repairPaymentIntentCalled);
     console.log(claimPaymentDetails.paymentStatus);
+    
     if(claimIdPresent && (Object.keys(claimPaymentDetails).length !== 0) && repairPaymentIntentCalled && 
-        (claimPaymentDetails.paymentStatus === "Issued" || claimPaymentDetails.paymentStatus === "Cleared")) {
+        (paymentStatus == "Issued" || paymentStatus == "Cleared")) {
         say = getRepairPaymentDetailsMessage();
     } else {
         var say = ["<s>Since the payment status is "+claimPaymentDetails.paymentStatus+", we are unavailable to provide the details. Please try something else.</s>"];
