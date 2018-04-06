@@ -251,7 +251,7 @@ alexaApp.intent('claimIdIntent', function (request, response) {
         else if(repairPaymentIntentCalled){
             console.log("inside api call");
             return helper.getClaimPaymentDetails(claimId).then((result)=>{            
-                say = "The payment status is "+result.paymentStatus;
+                say = ["<s> The payment status is "+result.paymentStatus+"</s>"];
                 claimPaymentDetails = result;
                 console.log('after call',say);
                 response.shouldEndSession(false);
