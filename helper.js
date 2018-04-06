@@ -104,7 +104,7 @@ module.exports = {
         return new Promise(function (resolve, reject) {
             rentalDays = rentalDays.match(/\d+/)[0];
             var startDate = new Date(rentalStartDate);
-            rentalStartDate = startDate.getDate() + '/' + (startDate.getMonth()) + '/' + startDate.getFullYear();
+            rentalStartDate = startDate.getDate() + '/' + (startDate.getMonth()+1) + '/' + startDate.getFullYear();
             console.log('Claim Id', claimId);
             console.log('rentalstartDate', rentalStartDate);
             console.log('RentalDays', rentalDays);
