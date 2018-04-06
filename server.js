@@ -476,7 +476,9 @@ alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
     console.log(Object.keys(claimPaymentDetails).length);
     
     if((Object.keys(claimPaymentDetails).length != 0) && repairPaymentIntentCalled && (paymentStatus == "Issued" || paymentStatus == "Cleared")) {
-        say = getRepairPaymentDetailsMessage();
+        getRepairPaymentDetailsMessage(function(result) {
+            say = result;
+        });
     } else {
         var say = ["<s>Since the payment status is "+claimPaymentDetails.paymentStatus+", we are unavailable to provide the details. Please try something else.</s>"];
     }
