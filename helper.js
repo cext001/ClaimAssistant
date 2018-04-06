@@ -130,7 +130,8 @@ module.exports = {
                             var rentStartDate = new Date(body.result.bookingStartDate);
                             console.log('rentstartdate', rentStartDate);
                             var month = months[rentStartDate.getMonth()];
-                            speechOutput = ['<s> The car has been booked with the Rental agency <break strength=\"medium\" /> ' + body.result.agency + ' <break time="200ms"/> and the reservation number is <break time="200ms"/> <say-as interpret-as=\"spell-out\">' + body.result.reservationID + '</say-as>. </s>'];
+                            speechOutput = ['<s> Let me help with your booking.<break time="2s"/>  </s>'];
+                            speechOutput.push('<s> The car has been booked with the Rental agency <break strength=\"medium\" /> ' + body.result.agency + ' <break time="200ms"/> and the reservation number is <break time="200ms"/> <say-as interpret-as=\"spell-out\">' + body.result.reservationID + '</say-as>. </s>');
                             speechOutput.push('<s> The car will be delivered on ' + month + '<say-as interpret-as="ordinal">' + rentStartDate.getDate() + '</say-as> at <break time="150ms"/> 9AM</s>');
                        
                     }
