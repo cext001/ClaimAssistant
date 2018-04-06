@@ -151,29 +151,6 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
     response.say(say.join('\n'));
 });
 
-alexaApp.intent('GermanClaimStatusIntent', function (request, response) {
-    var all = JSON.parse(request.session('all') || '{}');
-    claimStatusIntentCalled = true;
-    console.log(request.data.request.intent.slots)
-    var say=[];
-    
-    if (request.data.request.intent.slots.claimId.value){
-        claimId=request.data.request.intent.slots.claimId.value;
-        console.log('claimId:'+claimId);
-        claimIdPresent = true;
-        claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
-        getClaimStatusGerman(claimId,function(responseText){
-            say = responseText;
-        });
-    }
-    else{
-     say = ["<s>Bitte geben Sie die Anspruchsnummer an. <break strength=\"medium\" /></s>"];
-    }
-    response.shouldEndSession(false);
-    response.say(say.join('\n'));
-});
-
-
 alexaApp.intent('repairPaymentIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');   
 
@@ -263,7 +240,6 @@ alexaApp.intent('claimIdIntent', function (request, response) {
             console.log('Inside claimStatusIntentCalled');
             return helper.getClaimStatus(claimId).then((result)=>{
                 say = result;
-                //say= ["<s> According to our records, the current status of claim with ID <break strength=\"medium\" /> <say-as interpret-as=\"digits\"> 231233 </say-as>, is On Hold.</s>"];
                 console.log('after call',say);
                 response.shouldEndSession(false);
                 response.say(say.join('\n'));
@@ -311,17 +287,59 @@ alexaApp.intent('claimIdIntent', function (request, response) {
     
 });
 
+
+alexaApp.intent('GermanClaimStatusIntent', function (request, response) {
+    var all = JSON.parse(request.session('all') || '{}');
+    claimStatusIntentCalled = true;
+    console.log(request.data.request.intent.slots)
+    var say=[];
+    
+    if (request.data.request.intent.slots.claimId.value){
+        claimId=request.data.request.intent.slots.claimId.value;
+        console.log('claimId:'+claimId);
+        claimIdPresent = true;
+        claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
+        return helper.getClaimStatusGerman(claimId).then((result)=>{
+            say = result;
+            console.log('after call',say);
+            response.shouldEndSession(false);
+            response.say(say.join('\n'));
+
+        }).catch((err)=>{
+            say = ["<s> Bei der Bearbeitung Ihrer Anfrage ist ein Fehler aufgetreten.</s><s>Bitte versuche es erneut</s>"];
+            response.shouldEndSession(true);
+            response.say(say.join('\n'));				
+        })
+    }
+    else{
+     say = ["<s>Bitte geben Sie die Anspruchsnummer an. <break strength=\"medium\" /></s>"];
+    }
+    response.shouldEndSession(false);
+    response.say(say.join('\n'));
+});
+
+
+
 alexaApp.intent('GermanClaimIdIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say =[];
     console.log(request.data.request.intent.slots.claimId.value)
     claimId=request.data.request.intent.slots.claimId.value;
+    claimId = (claimId.replace(/(\d{3})(\d{2})(\d{6})/, "$1-$2-$3"));
     if(claimStatusIntentCalled){
-        getClaimStatusGerman(claimId,function(responseText){
-            say = responseText;
-        });
+        return helper.getClaimStatusGerman(claimId).then((result)=>{
+            say = result;
+            console.log('after call',say);
+            response.shouldEndSession(false);
+            response.say(say.join('\n'));
+
+        }).catch((err)=>{
+            say = ["<s> Bei der Bearbeitung Ihrer Anfrage ist ein Fehler aufgetreten.</s><s>Bitte versuche es erneut</s>"];
+            response.shouldEndSession(true);
+            response.say(say.join('\n'));				
+        })
     }
-    if(repairPaymentIntentCalled){
+    /*if(repairPaymentIntentCalled){
         getRepairPaymentStatus(claimId,function(responseText){
             say = responseText;
         });
@@ -332,7 +350,7 @@ alexaApp.intent('GermanClaimIdIntent', function (request, response) {
         });
     }
     response.shouldEndSession(false);
-    response.say(say.join('\n'));
+    response.say(say.join('\n'));*/
 });
 
 alexaApp.intent('rentalConfirmIntent', function (request, response) {
@@ -386,7 +404,7 @@ alexaApp.intent('rentalDetailsIntent', function (request, response) {
 
 alexaApp.intent('GermanWelcomeIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
-    var say =["<s> Willkommen beim Politikassistenten.</s>"];
+    var say =["<s> Willkommen beim Politikassistenten.</s><s>Was kann ich für Dich tun</s>"];
     response.shouldEndSession(true);
     response.say(say.join('\n'));
     resetAll();
