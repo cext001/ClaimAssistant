@@ -169,7 +169,6 @@ alexaApp.intent('repairPaymentIntent', function (request, response) {
     console.log('inside repairPaymentIntent');
     console.log(request.data.request.intent.slots)
     var say=[];
-    console.log(typeof request.data.request.intent.slots.claimId.value);
     console.log(request.data.request.intent.slots.claimId.value);
     if (request.data.request.intent.slots.claimId.value){
         claimId=request.data.request.intent.slots.claimId.value;
