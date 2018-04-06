@@ -465,7 +465,7 @@ function resetAll(){
 alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say = [];
-    console.log(repairPaymentDetailsIntent);
+    console.log('repairPaymentDetailsIntent');
     console.log(claimPaymentDetails);
     console.log(repairPaymentIntentCalled);
     console.log(claimPaymentDetails.paymentStatus);
