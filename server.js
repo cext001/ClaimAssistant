@@ -430,8 +430,8 @@ if (process.argv.length > 2) {
 }
 
 function getRepairPaymentDetailsMessage(callback){
-    say.push('<s>The amount of $'+result.totalPayments.amount+' is credited to your bank account number <break strength=\"medium\" /> <say-as interpret-as="spell-out">'+result.bankAccountNumber+'</say-as> </s>');
-    say.push('<s>on '+result.paymentDate+'.</s>');
+    say.push('<s>The amount of $'+claimPaymentDetails.totalPayments.amount+' is credited to your bank account number <break strength=\"medium\" /> <say-as interpret-as="spell-out">'+claimPaymentDetails.bankAccountNumber+'</say-as> </s>');
+    say.push('<s>on '+claimPaymentDetails.paymentDate+'.</s>');
     callback (say);
 }
 
@@ -465,8 +465,10 @@ function resetAll(){
 alexaApp.intent('repairPaymentDetailsIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say = [];
+    console.log(repairPaymentDetailsIntent);
     console.log(claimPaymentDetails);
     console.log(repairPaymentIntentCalled);
+    console.log(claimPaymentDetails.paymentStatus);
     if(claimIdPresent && (Object.keys(claimPaymentDetails).length !== 0) && repairPaymentIntentCalled && 
         (claimPaymentDetails.paymentStatus === "Issued" || claimPaymentDetails.paymentStatus === "Cleared")) {
         say = getRepairPaymentDetailsMessage();
