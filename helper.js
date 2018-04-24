@@ -104,15 +104,15 @@ module.exports = {
         return new Promise(function (resolve, reject) {
             rentalDays = rentalDays.match(/\d+/)[0];
             var startDate = new Date(rentalStartDate);
-            rentalStartDate = startDate.getDate() + '/' + (startDate.getMonth()+1) + '/' + startDate.getFullYear();
+            rentalStartDate = startDate.getDate() + '/' + (startDate.getMonth() + 1) + '/' + startDate.getFullYear();
             console.log('Claim Id', claimId);
             console.log('rentalstartDate', rentalStartDate);
             console.log('RentalDays', rentalDays);
             var options = {
                 method: 'POST',
-                url: config.claimStatusApiURL,
+                url: config.refactoredApiURL,
                 headers: { 'cache-control': 'no-cache', authorization: 'Basic c3U6Z3c=', 'content-type': 'application/json' },
-                body: { jsonrpc: '2.0', method: 'rentalCarBookingRequest', params: [claimId, rentalStartDate, rentalDays] },
+                body: { jsonrpc: '2.0', method: 'createNewSR', params: [{ClaimNumber:claimId, BookingStartDate:rentalStartDate, NoOfDays:rentalDays}] },
                 json: true
             };
             request(options, function (error, response, body) {
@@ -127,13 +127,12 @@ module.exports = {
                             speechOutput = ['<s>The claim number is not found.</s><s>Please enter a valid one</s>'];
                     } else {
                         console.log(body);
-                            var rentStartDate = new Date(body.result.bookingStartDate);
-                            console.log('rentstartdate', rentStartDate);
-                            var month = months[rentStartDate.getMonth()];
-                            speechOutput = ['<s> Let me help with your booking.<break time="2s"/>  </s>'];
-                            speechOutput.push('<s> The car has been booked with the Rental agency <break strength=\"medium\" /> ' + body.result.agency + ' <break time="200ms"/> and the reservation number is <break time="200ms"/> <say-as interpret-as=\"spell-out\">' + body.result.reservationID + '</say-as>. </s>');
-                            speechOutput.push('<s> The car will be delivered on ' + month + '<say-as interpret-as="ordinal">' + rentStartDate.getDate() + '</say-as> at <break time="150ms"/> 9AM</s>');
-                       
+                        var rentStartDate = new Date(body.result.bookingStartDate);
+                        console.log('rentstartdate', rentStartDate);
+                        var month = months[rentStartDate.getMonth()];
+                        speechOutput = ['<s> Let me help with your booking.<break time="2s"/>  </s>'];
+                        speechOutput.push('<s> The car has been booked with the Rental agency <break strength=\"medium\" /> ' + body.result.agency + ' <break time="200ms"/> and the reservation number is <break time="200ms"/> <say-as interpret-as=\"spell-out\">' + body.result.reservationID + '</say-as>. </s>');
+                        speechOutput.push('<s> The car will be delivered on ' + month + '<say-as interpret-as="ordinal">' + rentStartDate.getDate() + '</say-as> at <break time="150ms"/> 9AM</s>');
                     }
                     console.log(speechOutput);
                     resolve(speechOutput);
@@ -162,14 +161,14 @@ module.exports = {
                         console.log('Inside body error', body.error.message);
                         if (body.error.message == 'No Claim entity found')
                             speechOutput = ['<s>Die Anspruchsnummer wird nicht gefunden.</s><s>Bitte geben Sie einen gültigen ein</s>'];
-                    } else {                        
+                    } else {
                         if (body.result.currentClaimStatus === "On Hold") {
                             speechOutput = ["<s>Nach unseren Aufzeichnungen, der aktuelle Status des Anspruchs mit ID <break strength=\"medium\" /> <say-as interpret-as=\"digits\"> " + claimId + " </say-as>, in Wartestellung.</s>"];
-                           //speechOutput.push('<s>The reason for the same is <break strength=\"medium\" />' + body.result.reason + '.</s>');
+                            //speechOutput.push('<s>The reason for the same is <break strength=\"medium\" />' + body.result.reason + '.</s>');
                         }
                         if (body.result.currentClaimStatus === "Processed") {
                             speechOutput = ["<s>Nach unseren Aufzeichnungen, der aktuelle Status des Anspruchs mit ID <break strength=\"medium\" /> <say-as interpret-as=\"digits\"> " + claimId + " </say-as>,wird verarbeitet.</s>"];
-                           //speechOutput.push('<s>The reason for the same is <break strength=\"medium\" />' + body.result.reason + '.</s>');
+                            //speechOutput.push('<s>The reason for the same is <break strength=\"medium\" />' + body.result.reason + '.</s>');
                         }
                     }
                     console.log(speechOutput);
