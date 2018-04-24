@@ -122,7 +122,7 @@ alexaApp.intent('claimStatusIntent', function (request, response) {
     console.log(request.data.request.intent.slots)
     var say=[];    
     if (request.data.request.intent.slots.claimId.value){
-        claimId=request.data.request.intent.slots.claimId.value;
+        claimId=request.data.request.intent.slots.claimId.value+"";
         console.log('claimId:'+claimId);
         if(claimId.length==11){
             claimIdPresent = true;
