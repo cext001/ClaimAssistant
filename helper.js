@@ -132,7 +132,7 @@ module.exports = {
                         if (body.error.message == 'No Claim entity found')
                             speechOutput = ['<s>The claim number is not found.</s><s>Please enter a valid one</s>'];
                     } else {
-                        console.log(body);
+                        console.log("body",JSON.stringify(body));
                         var rentStartDate = new Date(body.result.bookingStartDate);
                         console.log('rentstartdate', rentStartDate);
                         var month = months[rentStartDate.getMonth()];
