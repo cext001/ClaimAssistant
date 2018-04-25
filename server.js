@@ -197,7 +197,7 @@ alexaApp.intent('rentalCarIntent', function (request, response) {
     var say=[];
     
     if (request.data.request.intent.slots.claimId.value){
-        claimId=request.data.request.intent.slots.claimId.vaalue;
+        claimId=request.data.request.intent.slots.claimId.value;
         console.log('claimId:'+claimId);
         if(claimId.length==11){
             claimIdPresent = true;

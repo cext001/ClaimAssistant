@@ -65,9 +65,15 @@ module.exports = {
         return new Promise(function (resolve, reject) {
             var options = {
                 method: 'POST',
-                url: config.claimStatusApiURL,
+                url: config.refactoredApiURL,
                 headers: { 'cache-control': 'no-cache', authorization: 'Basic c3U6Z3c=', 'content-type': 'application/json' },
-                body: { jsonrpc: '2.0', method: 'rentalCarBookingStatus', params: [claimId] },
+                body: {
+                    "jsonrpc": "2.0",
+                    "method": "rentalCarBookingStatus",
+                    "params": [
+                        claimId
+                    ]
+                },
                 json: true
             };
             request(options, function (error, response, body) {
@@ -112,7 +118,7 @@ module.exports = {
                 method: 'POST',
                 url: config.refactoredApiURL,
                 headers: { 'cache-control': 'no-cache', authorization: 'Basic c3U6Z3c=', 'content-type': 'application/json' },
-                body: { jsonrpc: '2.0', method: 'createNewSR', params: [{ClaimNumber:claimId, BookingStartDate:rentalStartDate, NoOfDays:rentalDays}] },
+                body: { jsonrpc: '2.0', method: 'createNewSR', params: [{ ClaimNumber: claimId, BookingStartDate: rentalStartDate, NoOfDays: rentalDays }] },
                 json: true
             };
             request(options, function (error, response, body) {
