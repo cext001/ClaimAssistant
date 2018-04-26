@@ -108,7 +108,7 @@ module.exports = {
     "getRentalConfirmation": function (claimId, rentalStartDate, rentalDays) {
         var speechOutput = [];
         return new Promise(function (resolve, reject) {
-            rentalDays = rentalDays.match(/\d+/)[0];
+            //rentalDays = rentalDays.match(/\d+/)[0];
             var startDate = new Date(rentalStartDate);
             rentalStartDate = startDate.getDate() + '/' + (startDate.getMonth() + 1) + '/' + startDate.getFullYear();
             console.log('Claim Id', claimId);
