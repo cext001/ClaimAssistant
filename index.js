@@ -16,10 +16,12 @@ var claimId = "";
 var resp_msg = "";
 
 app.get('/', (req, res) => {
-  return helper.getRentalConfirmationTest('000-00-000203', '2018-04-26', 3).then((result) => {
+  return helper.getRentalConfirmation('000-00-000203', '2018-04-26', 3).then((result) => {
     console.log(result);
+    res.send(result);
   }).catch((err) => {
     console.log(err);
+    res.send(err);
   })
 });
 
