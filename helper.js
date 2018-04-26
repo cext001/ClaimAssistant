@@ -132,7 +132,7 @@ module.exports = {
                         if (body.error.message == 'No Claim entity found')
                             speechOutput = ['<s>The claim number is not found.</s><s>Please enter a valid one</s>'];
                     } else {
-                        console.log("body",JSON.stringify(body));
+                        console.log("body", JSON.stringify(body));
                         var rentStartDate = new Date(body.result.bookingStartDate);
                         console.log('rentstartdate', rentStartDate);
                         var month = months[rentStartDate.getMonth()];
@@ -182,6 +182,50 @@ module.exports = {
                 }
             });
         })
+    },
+    "getRentalConfirmationTest": function (claimId, rentalStartDate, rentalDays) {
+        var speechOutput = [];
+        return new Promise(function (resolve, reject) {
+            //rentalDays = rentalDays.match(/\d+/)[0];
+            var startDate = new Date(rentalStartDate);
+            rentalStartDate = startDate.getDate() + '/' + (startDate.getMonth() + 1) + '/' + startDate.getFullYear();
+            console.log('Claim Id', claimId);
+            console.log('rentalstartDate', rentalStartDate);
+            console.log('RentalDays', rentalDays);
+
+            var options = {
+                method: 'POST',
+                url: 'http://35.154.116.87:8080/cc/service/edge/claim/sr',
+                headers:
+                    {
+                        'cache-control': 'no-cache',
+                        'content-type': 'application/json',
+                        authorization: 'Basic c3U6Z3c='
+                    },
+                body:
+                    {
+                        jsonrpc: '2.0',
+                        method: 'createNewSR',
+                        params:
+                            [{
+                                ClaimNumber: claimId,
+                                BookingStartDate: rentalStartDate,
+                                NoOfDays: rentalDays
+                            }]
+                    },
+                json: true
+            };
+
+            request(options, function (error, response, body) {
+                if (error) {
+                    console.log(error);
+                    //speechOutput = ["<s>Something went wrong.</s><s> Please try again</s>"];
+                    //resolve(speechOutput);
+                } else {
+                    console.log(body);
+                }
+            });
+        });
     }
 };
 
