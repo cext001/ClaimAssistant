@@ -1,0 +1,205 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "claims desk",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "exit",
+                        "stop"
+                    ]
+                },
+                {
+                    "name": "claimStatusIntent",
+                    "slots": [
+                        {
+                            "name": "claimId",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "status of claim id {claimId}",
+                        "claim status of my claim",
+                        "claim status",
+                        "my claim status",
+                        "status of my claim",
+                        "whats my claim status",
+                        "what is my claim status"
+                    ]
+                },
+                {
+                    "name": "claimIdIntent",
+                    "slots": [
+                        {
+                            "name": "claimId",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "id {claimId}",
+                        "{claimId}",
+                        "my claim id is {claimId}",
+                        "claim id is {claimId}"
+                    ]
+                },
+                {
+                    "name": "thankIntent",
+                    "slots": [],
+                    "samples": [
+                        "thanks",
+                        "thank you"
+                    ]
+                },
+                {
+                    "name": "repairPaymentIntent",
+                    "slots": [
+                        {
+                            "name": "claimId",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "payment status",
+                        "what is the payment status of claim id {claimId}",
+                        "payment status for claim id {claimId}",
+                        "payment status for repair",
+                        "whats the  payment status for the repair charges"
+                    ]
+                },
+                {
+                    "name": "rentalCarIntent",
+                    "slots": [
+                        {
+                            "name": "company",
+                            "type": "AMAZON.Organization"
+                        },
+                        {
+                            "name": "claimId",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "rental car for my claim id {claimId}",
+                        "rental car for my claim",
+                        "check the status of rental car",
+                        "can you check the status of the rental car booking from {company}",
+                        "rental car status",
+                        "can you check the status of the rental car booking"
+                    ]
+                },
+                {
+                    "name": "rentalDetailsIntent",
+                    "slots": [
+                        {
+                            "name": "startDate",
+                            "type": "AMAZON.DATE"
+                        },
+                        {
+                            "name": "days",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{days} Days",
+                        "{startDate}",
+                        "start date is {startDate}"
+                    ]
+                },
+                {
+                    "name": "rentalConfirmIntent",
+                    "slots": [],
+                    "samples": [
+                        "ok",
+                        "sure",
+                        "yes"
+                    ]
+                },
+                {
+                    "name": "rentalCancelIntent",
+                    "slots": [],
+                    "samples": [
+                        "I don't want",
+                        "cancel",
+                        "no"
+                    ]
+                },
+                {
+                    "name": "repairPaymentDetailsIntent",
+                    "slots": [],
+                    "samples": [
+                        "please provide my payment details",
+                        "get my payment details",
+                        "what is my payment details",
+                        "can you provide payment details"
+                    ]
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "claimIdIntent",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.474975887531"
+                    },
+                    "slots": [
+                        {
+                            "name": "claimId",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "claimStatusIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "claimId",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.347116218492.1011074774824"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Confirm.Intent.474975887531",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "is the number u entered correct"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.347116218492.1011074774824",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Please provide the claim number to get the status"
+                    }
+                ]
+            }
+        ]
+    }
+}
